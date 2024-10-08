@@ -1,23 +1,13 @@
 
-import { 
-  Card,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
+//import { VideoPage } from "./vid/vid_page";
+import Vid1 from "./vid/vid1"
 
 
-export default function Video() {
-  return (
-    <Card className="md:h-auto md:w-[400px]">
-          <CardTitle >
-              Login to continue
-          </CardTitle>
-        <CardContent >
 
-        </CardContent>
-
-    </Card>
-
-  )
+const VidPage = () => {
+    return(
+        <Vid1 />
+    )
 }
+export default VidPage;
 

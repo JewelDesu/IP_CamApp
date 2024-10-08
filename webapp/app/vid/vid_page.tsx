@@ -1,4 +1,3 @@
-
 'use client'
 import React from 'react'
 import ReactPlayer from 'react-player/lazy'
@@ -15,7 +14,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-export default function VideoPage() {
+export function VideoPage() {
     const Vid1 = "https://youtu.be/3MQKlh2lnws?si=vzacoInNlx_sK47N"
     const Vid2 = "https://youtu.be/Mgv4swadr48?si=bVnxMad1LIyrWXM3"
     const Vid3 = "https://youtu.be/V6T6R6Oscpw?si=7N3zEv71izXoeEnt"
