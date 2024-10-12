@@ -12,16 +12,10 @@ export default function Vid1() {
       hls.attachMedia(videoEl.current);
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
         hls.loadSource(
-          "http://192.168.0.148//live/mystream.m3u8"
+          "http://192.168.0.166:4000/live/mystream.m3u8"
         );
       });
     }
-
-    return () => {
-      if (hls) {
-        hls.destroy();
-      }
-    };
   });
 
   return (

@@ -1,0 +1,18 @@
+{
+    "name": "cam_app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "npm --prefix ./webapp run dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "startup": "nodemon ./serverside/video-server.js & npm run dev && fg"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cam_app": "file:",
+        "nodemon": "^2.0.22"
+    }
+}
