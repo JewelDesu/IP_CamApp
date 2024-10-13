@@ -71,15 +71,12 @@ int getLineCountVendor ()
     }
 void openfile (struct host* p, int n) {
     ifstream fin("test.txt");
-    int t=1;
     while(!fin.eof())
     {
         for(int i=0;i<n;i++)
         {
             fin >> p[i].ipaddr;
             fin >> p[i].macaddr;
-            //inserting(head, p[i].ipaddr, p[i].macaddr);
-            t++;
         }
 
     }
@@ -87,14 +84,12 @@ void openfile (struct host* p, int n) {
 }
 void openfileVendor (struct vendors* v, int n) {
     ifstream fin("test2.txt");
-    int t=1;
     while(!fin.eof())
     {
         for(int i=0;i<n;i++)
         {
             fin >> v[i].macaddr;
             fin >> v[i].vendor;
-            t++;
         }
 
     }

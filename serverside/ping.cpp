@@ -4,7 +4,7 @@ void count_open_addr(int start, int end)
 {
         for(int i=start;i<end;i++)
     {
-        string com ("ping -c1 -s1" + ip + to_string(i));
+        string com ("ping -c1 -s1 -w1 " + ip + to_string(i));
         int bing = system(com.c_str());
         if (bing == 0)
             {
@@ -15,13 +15,43 @@ void count_open_addr(int start, int end)
     }
 }
 
-void print_addr(vector<string>& ipaddrs, int start, int end){
+void print_addr(struct adresses* addr){
 
-    for (int i=0;i<sizeof(ipaddrs);i++){
-        cout << "\033[1m" << i << "\033[0m\n";
+    for (int i=0;i<sizeof(addr);i++){
+        cout << "\033[1m" << addr[i].ipaddr << "\033[0m\n" << addr[i].macaddr << "\033[0m\n"  ;
     }
 
 }   
+
+void get_mac_adresses ()
+{
+    adresses* addr = new adresses[get_line_count()];
+    ifstream arp("/proc/net/arp");
+    int t=1;
+    string add,hw,flag,mac,mask,device;
+    while(!arp.eof())
+    {
+        for(int i=1;i<sizeof(ipaddrs)+1;i++)
+        {
+            for(int j=0; j<6;j++)
+            {
+                arp>>add;
+                arp>>hw;
+                arp>>flag;
+                arp>>mac;
+                arp>>mask;
+                arp>>device;
+            }
+            addr[i].ipaddr = add;
+            addr[i].macaddr = mac;  
+        }
+
+    }
+    arp.close();
+
+    print_addr(addr);
+
+}
 
 void thread_handler(int start, int end)
 {
@@ -39,16 +69,28 @@ void thread_handler(int start, int end)
         thread_list[thread_num].join();
     }
 
-    print_addr(ipaddrs,start,end);
+    get_mac_adresses();
     
 }
 
+int get_line_count()
+{
+    ifstream arp("/proc/net/arp");
+
+    int n=0;
+    string line;
+
+    while(getline(arp,line))
+        n++;
+    arp.close();
+    return n;
+}
 
 int main() {
     int start = 1;
     int end = 255;
 
     thread_handler(start,end);
-
+    
     return 0;
 }

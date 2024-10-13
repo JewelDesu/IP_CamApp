@@ -3,6 +3,7 @@
 #include <string.h>
 #include <cstdlib>
 #include <string>
+#include <fstream>
 //#include <unistd.h>
 
 #include <unordered_map>
@@ -22,8 +23,15 @@ using std::mutex;
 using std::lock_guard;
 using std::vector;
 using std::to_string;
+using std::ifstream;
+using std::getline;
 
 static vector<string> ipaddrs;
 static string ip ("192.168.0.");
-
 static mutex vec_mtx;
+
+struct adresses{
+    string ipaddr;
+    string macaddr;
+};
+
