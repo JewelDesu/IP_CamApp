@@ -1,13 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include "ping.hpp"
 
-using namespace std;
-
-struct host {
-    string ipaddr;
-    string macaddr;
-};
 struct vendors {
     string macaddr;
     string vendor;
@@ -18,44 +10,26 @@ struct list {
     string addr;
 };
 
-int getLineCount ();
 int getLineCountVendor ();
-void openfile (struct host* p, int n);
-void openfileVendor (struct vendors* v, int n);
-void compare (struct host* p, struct vendors* v, int n, int m);
+void openfileVendor (struct vendors* v, int m);
+void compare (struct vendors* v, int m);
 void assignAddr (struct list* l, int var);
 
 int main() {
 
-    
-    int n=getLineCount();
+    main_ping();
     int m=getLineCountVendor();
     cout<<m<<endl;
-    host* p = new host[n];
     vendors* v = new vendors[m];
 
-    openfile(p,n);
     openfileVendor(v,m);
     for(int i=0;i<m;i++)
     {
         cout<<v[i].vendor<<"\t"<<v[i].macaddr<<endl;
     }
-    compare(p,v,n,m);
+    compare(v,m);
 
 }
-int getLineCount ()
-    {
-        ifstream fin("test.txt");
-
-        int n=0;
-        string line;
-
-        while(getline(fin,line))
-            n++;
-
-        fin.close();
-        return n;
-    }
 int getLineCountVendor ()
     {
         ifstream fin("test2.txt");
@@ -69,24 +43,12 @@ int getLineCountVendor ()
         fin.close();
         return n;
     }
-void openfile (struct host* p, int n) {
-    ifstream fin("test.txt");
-    while(!fin.eof())
-    {
-        for(int i=0;i<n;i++)
-        {
-            fin >> p[i].ipaddr;
-            fin >> p[i].macaddr;
-        }
 
-    }
-    fin.close();
-}
-void openfileVendor (struct vendors* v, int n) {
+void openfileVendor (struct vendors* v, int m) {
     ifstream fin("test2.txt");
     while(!fin.eof())
     {
-        for(int i=0;i<n;i++)
+        for(int i=0;i<m;i++)
         {
             fin >> v[i].macaddr;
             fin >> v[i].vendor;
@@ -96,19 +58,19 @@ void openfileVendor (struct vendors* v, int n) {
     fin.close();
 }
 
-void compare (struct host* p, struct vendors* v, int n, int m)
+void compare (struct vendors* v, int m)
 {
     list* l = new list[10];
     int var=0, car;
-    int Ran[sizeof(host)];
+    //int Ran[sizeof(host)];
     
-    for(int i=0;i<n;i++)
+    for(int i=0;i<sizeof(ipaddrs);i++)
     {
         for(int j=0;j<m;j++)
         {
-            if(p[i].macaddr.substr(0,8) == v[j].macaddr)
+            if(macaddrs[i] == v[j].macaddr)
                 {
-                    l[var].ip=p[i].ipaddr;
+                    l[var].ip=ipaddrs[i];
                     l[var].vendor=v[j].vendor;
                     var++;
                 }

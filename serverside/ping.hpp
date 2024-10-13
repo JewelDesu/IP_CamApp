@@ -26,7 +26,8 @@ using std::to_string;
 using std::ifstream;
 using std::getline;
 
-static vector<string> ipaddrs;
+extern vector<string> ipaddrs;
+extern vector<string> macaddrs;
 static string ip ("192.168.0.");
 static mutex vec_mtx;
 
@@ -35,3 +36,4 @@ struct adresses{
     string macaddr;
 };
 
+int main_ping();
