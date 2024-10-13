@@ -1,9 +1,8 @@
 #include "ping.hpp"
 
-void count_open_addr(int end)
+void count_open_addr(int start, int end)
 {
-    string ip;
-        for(int i=1;i<255;i++)
+        for(int i=start;i<end;i++)
     {
         string com ("ping -c1 -s1" + ip + to_string(i));
         int bing = system(com.c_str());
