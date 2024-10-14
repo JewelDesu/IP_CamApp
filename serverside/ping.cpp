@@ -46,6 +46,7 @@ void sorting_adresses (struct adresses* addr)
 
     for(int i=0;i<n;i++)
     {
+        int l=macaddrs.size();
         for(int j=0;j<get_line_count();j++)
         {
             if(ipaddrs[i] == addr[j].ipaddr)
@@ -54,7 +55,7 @@ void sorting_adresses (struct adresses* addr)
                 macaddrs.push_back(addr[j].macaddr);
             }
         }
-        if(macaddrs.size() != i+1)
+        if(l != i+1)
         {
             macaddrs.push_back("LOCAL HOST");
         }
@@ -64,10 +65,11 @@ void sorting_adresses (struct adresses* addr)
 
 void ping_active_adresses()
 {
-    for(int i=0;i<ipaddrs.size();i++)
+    int l=ipaddrs.size();
+    for(int i=0;i<l;i++)
     {
         string com ("ping -c1 -s1 -w2 " + ipaddrs[i]);
-        int bing = system(com.c_str());
+        system(com.c_str());
     }
 }  
 
@@ -76,7 +78,7 @@ void get_mac_adresses ()
     int g = get_line_count();
     adresses* addr = new adresses[g];
     ifstream arp("/proc/net/arp");
-    int t=1;
+    //int t=1;
     string add,hw,flag,mac,mask,device;
     arp.ignore(500,'\n');
 
