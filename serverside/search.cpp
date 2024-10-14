@@ -20,7 +20,6 @@ extern vector<string> macaddrs;
 
 int main() {
 
-    main_ping();
     int m=getLineCountVendor();
     cout<<m<<endl;
     vendors* v = new vendors[m];

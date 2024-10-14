@@ -114,7 +114,7 @@ void thread_handler(int start, int end)
     
 }
 
-int main_ping() {
+int main() {
     int start = 1;
     int end = 255;
 
