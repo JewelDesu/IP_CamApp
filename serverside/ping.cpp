@@ -28,9 +28,9 @@ int get_line_count()
     return n;
 }
 
-void print_addr(vector<string>& ipaddrs, vector<string>& macaddrs){
+void print_addr(vector<string>& ipaddrs, vector<string>& macaddrs, struct adresses* addr){
 
-    for (int i=0;i<sizeof(ipaddrs);i++){
+    for (int i=0;i<ipaddrs.size();i++){
         cout << ipaddrs[i] << " " << macaddrs[i] << endl;
     }
 
@@ -38,11 +38,11 @@ void print_addr(vector<string>& ipaddrs, vector<string>& macaddrs){
 
 void sorting_adresses (struct adresses* addr)
 {
-    int n=sizeof(ipaddrs);
+    int n=ipaddrs.size();
 
     for(int i=0;i<n;i++)
     {
-        for(int j=0;j<n;j++)
+        for(int j=0;j<sizeof(addr);j++)
         {
             if(ipaddrs[i] == addr[j].ipaddr)
             {
@@ -50,12 +50,12 @@ void sorting_adresses (struct adresses* addr)
             }
         }
     }
-    print_addr();
+    //print_addr(ipaddrs,macaddrs,addr);
 }
 
 void ping_active_adresses()
 {
-    for(int i=0;i<sizeof(ipaddrs);i++)
+    for(int i=0;i<ipaddrs.size();i++)
     {
         string com ("ping -c1 -s1 -w1 " + ipaddrs[i]);
         int bing = system(com.c_str());
@@ -70,17 +70,14 @@ void get_mac_adresses ()
     string add,hw,flag,mac,mask,device;
     while(!arp.eof())
     {
-        for(int i=1;i<sizeof(ipaddrs)+1;i++)
+        for(int i=0;i<sizeof(addr);i++)
         {
-            for(int j=0; j<6;j++)
-            {
-                arp>>add;
-                arp>>hw;
-                arp>>flag;
-                arp>>mac;
-                arp>>mask;
-                arp>>device;
-            }
+            arp>>add;
+            arp>>hw;
+            arp>>flag;
+            arp>>mac;
+            arp>>mask;
+            arp>>device;
             addr[i].ipaddr = add;
             addr[i].macaddr = mac;  
         }
@@ -88,7 +85,7 @@ void get_mac_adresses ()
     }
     arp.close();
 
-    
+    print_addr(ipaddrs,macaddrs,addr);
     sorting_adresses(addr);
 
 }
