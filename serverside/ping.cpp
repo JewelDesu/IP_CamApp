@@ -28,7 +28,7 @@ int get_line_count()
     return n;
 }
 
-void print_addr(){
+void print_addr(vector<string>& ipaddrs, vector<string>& macaddrs){
 
     for (int i=0;i<sizeof(ipaddrs);i++){
         cout << ipaddrs[i] << " " << macaddrs[i] << endl;
@@ -50,6 +50,7 @@ void sorting_adresses (struct adresses* addr)
             }
         }
     }
+    print_addr();
 }
 
 void ping_active_adresses()
@@ -87,8 +88,7 @@ void get_mac_adresses ()
     }
     arp.close();
 
-    ping_active_adresses();
-    get_mac_adresses();
+    
     sorting_adresses(addr);
 
 }
@@ -109,6 +109,7 @@ void thread_handler(int start, int end)
         thread_list[thread_num].join();
     }
 
+    ping_active_adresses();
     get_mac_adresses();
     
 }

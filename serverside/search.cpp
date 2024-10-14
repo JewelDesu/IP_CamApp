@@ -15,6 +15,9 @@ void openfileVendor (struct vendors* v, int m);
 void compare (struct vendors* v, int m);
 void assignAddr (struct list* l, int var);
 
+extern vector<string> ipaddrs;
+extern vector<string> macaddrs;
+
 int main() {
 
     main_ping();
