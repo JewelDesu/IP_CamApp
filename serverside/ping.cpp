@@ -30,10 +30,14 @@ int get_line_count()
 
 void print_addr(vector<string>& ipaddrs, vector<string>& macaddrs, struct adresses* addr){
 
-    for (int i=0;i<ipaddrs.size();i++){
+    int l = ipaddrs.size();
+    int k = get_line_count();
+    for (int i=0;i<l;i++)
+    {
         cout << ipaddrs[i] << " " << macaddrs[i] << endl;
     }
 
+    cout<<l<<" "<<k<<" "<<get_line_count()<<endl;
 } 
 
 void sorting_adresses (struct adresses* addr)
@@ -42,35 +46,41 @@ void sorting_adresses (struct adresses* addr)
 
     for(int i=0;i<n;i++)
     {
-        for(int j=0;j<sizeof(addr);j++)
+        for(int j=0;j<get_line_count();j++)
         {
             if(ipaddrs[i] == addr[j].ipaddr)
             {
-                macaddrs[i]=addr[j].macaddr;
+                //lock_guard<mutex> guard(vec_mtx);
+                macaddrs.push_back(addr[j].macaddr);
             }
         }
+        if(macaddrs.size() != i+1)
+        {
+            macaddrs.push_back("LOCAL HOST");
+        }
     }
-    //print_addr(ipaddrs,macaddrs,addr);
+    print_addr(ipaddrs,macaddrs,addr);
 }
 
 void ping_active_adresses()
 {
     for(int i=0;i<ipaddrs.size();i++)
     {
-        string com ("ping -c1 -s1 -w1 " + ipaddrs[i]);
+        string com ("ping -c1 -s1 -w2 " + ipaddrs[i]);
         int bing = system(com.c_str());
     }
 }  
 
 void get_mac_adresses ()
 {
-    adresses* addr = new adresses[get_line_count()];
+    int g = get_line_count();
+    adresses* addr = new adresses[g];
     ifstream arp("/proc/net/arp");
     int t=1;
     string add,hw,flag,mac,mask,device;
-    while(!arp.eof())
-    {
-        for(int i=0;i<sizeof(addr);i++)
+    arp.ignore(500,'\n');
+
+        for(int i=0;i<g;i++)
         {
             arp>>add;
             arp>>hw;
@@ -82,10 +92,10 @@ void get_mac_adresses ()
             addr[i].macaddr = mac;  
         }
 
-    }
+    
     arp.close();
-
-    print_addr(ipaddrs,macaddrs,addr);
+    cout<<" "<<g<<endl;
+   // print_addr(ipaddrs,macaddrs,addr);
     sorting_adresses(addr);
 
 }
@@ -107,16 +117,16 @@ void thread_handler(int start, int end)
     }
 
     ping_active_adresses();
-    get_mac_adresses();
+    
     
 }
 
 int main() {
     int start = 1;
-    int end = 255;
+    int end = 254;
 
     thread_handler(start,end);
-    
+    get_mac_adresses();
     
     return 0;
 }
