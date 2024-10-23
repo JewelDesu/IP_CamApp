@@ -1,85 +1,12 @@
-#include "ping.hpp"
+#include "search.hpp"
 
-struct vendors {
-    string macaddr;
-    string vendor;
-};
-struct list {
-    string ip;
-    string vendor;
-    string addr;
-};
+//extern vector<string> ipaddrs;
+//extern vector<string> macaddrs;
 
-int getLineCountVendor ();
-void openfileVendor (struct vendors* v, int m);
-void compare (struct vendors* v, int m);
-void assignAddr (struct list* l, int var);
-
-extern vector<string> ipaddrs;
-extern vector<string> macaddrs;
-
-int main() {
-
-    int m=getLineCountVendor();
-    cout<<m<<endl;
-    vendors* v = new vendors[m];
-
-    openfileVendor(v,m);
-    for(int i=0;i<m;i++)
-    {
-        cout<<v[i].vendor<<"\t"<<v[i].macaddr<<endl;
-    }
-    compare(v,m);
-
-}
-int getLineCountVendor ()
-    {
-        ifstream fin("test2.txt");
-
-        int n=0;
-        string line;
-
-        while(getline(fin,line))
-            n++;
-
-        fin.close();
-        return n;
-    }
-
-void openfileVendor (struct vendors* v, int m) {
-    ifstream fin("test2.txt");
-    while(!fin.eof())
-    {
-        for(int i=0;i<m;i++)
-        {
-            fin >> v[i].macaddr;
-            fin >> v[i].vendor;
-        }
-
-    }
-    fin.close();
-}
-
-void compare (struct vendors* v, int m)
+void scan()
 {
-    list* l = new list[10];
-    int var=0, car;
-    //int Ran[sizeof(host)];
-    
-    for(int i=0;i<sizeof(ipaddrs);i++)
-    {
-        for(int j=0;j<m;j++)
-        {
-            if(macaddrs[i] == v[j].macaddr)
-                {
-                    l[var].ip=ipaddrs[i];
-                    l[var].vendor=v[j].vendor;
-                    var++;
-                }
-
-        }
-    }
-    assignAddr(l,var);
+    string comm("nmap -n -sP 192.168.0.1/24 | awk '/Nmap scan report/{printf $5;printf " ";getline;getline;print $3;}' > test");
+    system(comm.c_str());
 }
 
 void assignAddr (struct list* l, int var)
@@ -97,4 +24,102 @@ void assignAddr (struct list* l, int var)
     {
         cout<<l[i].addr<<endl;
     }
+}
+
+int getLineCount ()
+{
+    ifstream fin("scan");
+
+    int n=0;
+    string line;
+
+    while(getline(fin,line))
+         n++;
+
+    fin.close();
+    return n;
+} 
+
+int getLineCountVendor ()
+{
+    ifstream fin("test2.txt");
+
+    int n=0;
+    string line;
+
+    while(getline(fin,line))
+       n++;
+
+    fin.close();
+    return n;
+}
+
+void openfile (struct host* p, int n) 
+{
+    ifstream fin("scan");
+    int t=1;
+    while(!fin.eof())
+    {
+        for(int i=0;i<n;i++)
+        {
+            fin >> p[i].ipaddr;
+            fin >> p[i].macaddr;
+            //inserting(head, p[i].ipaddr, p[i].macaddr);
+            t++;
+        }
+
+    }
+    fin.close();
+}
+
+void openfileVendor (struct vendors* v, int m) {
+    ifstream fin("test2.txt");
+    while(!fin.eof())
+    {
+        for(int i=0;i<m;i++)
+        {
+            fin >> v[i].macaddr;
+            fin >> v[i].vendor;
+        }
+
+    }
+    fin.close();
+}
+
+void compare (struct host* p, struct vendors* v, int n, int m)
+{
+    list* l = new list[10];
+    int var=0, car;
+    
+    
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            if(p[i].macaddr.substr(0,8) == v[j].macaddr)
+                {
+                    l[var].ip=p[i].ipaddr;
+                    l[var].vendor=v[j].vendor;
+                    var++;
+                }
+
+        }
+    }
+    assignAddr(l,var);
+}
+
+int main() {
+    scan();
+    sleep_for(7s);
+
+    int n=getLineCount();
+    int m=getLineCountVendor();
+
+    host* p = new host[n];
+    vendors* v = new vendors[m];
+
+    openfile(p,n);
+    openfileVendor(v,m);
+    compare(p,v,n,m);
+
 }
