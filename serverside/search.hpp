@@ -14,6 +14,7 @@ using std::endl;
 using std::string;
 using std::to_string;
 using std::ifstream;
+using std::ofstream;
 using std::getline;
 using namespace std::this_thread;
 using namespace std::chrono;

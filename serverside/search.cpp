@@ -5,7 +5,8 @@
 
 void scan()
 {
-    string comm("nmap -n -sP 192.168.0.1/24 | awk '/Nmap scan report/{printf $5;printf " ";getline;getline;print $3;}' > test");
+    string d = "" "";
+    string comm="nmap -n -sP 192.168.0.1/24 | awk '/Nmap scan report/{printf $5;printf \" \";getline;getline;print $3;}' > scan";
     system(comm.c_str());
 }
 
@@ -13,22 +14,28 @@ void assignAddr (struct list* l, int var)
 {
     string rtsp="rtsp://admin:L279DDDC@";
     string dahua=":554/cam/realmonitor?channel=1&subtype=1";
+    int jim = 0;
     for(int i=0;i<var;i++)
     {
         if(l[i].vendor == "Dahua")
-            l[i].addr=rtsp + l[i].ip + dahua;
+            {
+                l[i].addr=rtsp + l[i].ip + dahua;
+                jim++;
+            }
 
     }
 
-    for(int i=0;i<var;i++)
+    for(int i=0;i<jim;i++)
     {
         cout<<l[i].addr<<endl;
     }
+
+    returnOutput(l,jim);
 }
 
 int getLineCount ()
 {
-    ifstream fin("scan");
+    ifstream fin("htt");
 
     int n=0;
     string line;
@@ -89,7 +96,7 @@ void openfileVendor (struct vendors* v, int m) {
 void compare (struct host* p, struct vendors* v, int n, int m)
 {
     list* l = new list[10];
-    int var=0, car;
+    int var=0;
     
     
     for(int i=0;i<n;i++)
@@ -107,7 +114,15 @@ void compare (struct host* p, struct vendors* v, int n, int m)
     }
     assignAddr(l,var);
 }
-
+int returnOutput(struct list* l, int jim)
+{
+    ofstream out("links");
+    for(int i=0;i<jim;i++)
+    {
+        out<<l[i].addr<<endl;
+    }
+    out.close();
+}
 int main() {
     scan();
     sleep_for(7s);
