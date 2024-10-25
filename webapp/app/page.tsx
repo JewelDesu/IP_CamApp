@@ -1,12 +1,12 @@
 
 //import { VideoPage } from "./vid/vid_page";
-import Vid1 from "./vid/vid1"
+import Vid2 from "./vid/vid2"
 
 
 
 const VidPage = () => {
     return(
-        <Vid1 />
+        <Vid2 />
     )
 }
 export default VidPage;

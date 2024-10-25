@@ -26,7 +26,7 @@ React.useEffect(() => {
 
   return (
     <div className="App" >
-      <video className='vid2' ref={videoE} autoPlay /> 
+      <video className='vid1' ref={videoE} autoPlay /> 
     </div>
   );
 }

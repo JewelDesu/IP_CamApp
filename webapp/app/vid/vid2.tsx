@@ -38,7 +38,7 @@ export default function Vid2() {
   return (
     <div className="App" >
       <video className='vid2' ref={videoEl}  />
-      <video src="admin:admin@192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1" autoPlay controls />
+      <img src="http://admin:admin@192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1"/> 
     </div>
   );
 

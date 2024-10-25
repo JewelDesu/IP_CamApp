@@ -1,0 +1,15 @@
+.video1 {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .vid2 {
+    width:min-content;
+    height:fit-content;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
