@@ -81,8 +81,8 @@ int returnOutput(struct list* l, int jim)
 
 void assignAddr (struct list* l, int var)
 {
-    string rtsp="rtsp://admin:L279DDDC@";
-    string dahua=":554/cam/realmonitor?channel=1&subtype=1";
+    string rtsp="http://admin:admin@";
+    string dahua="/cam/realmonitor?channel=1&subtype=1";
     int jim = 0;
     for(int i=0;i<var;i++)
     {
