@@ -69,7 +69,7 @@ void openfileVendor (struct vendors* v, int m) {
     fin.close();
 }
 
-int returnOutput(struct list* l, int jim)
+void returnOutput(struct list* l, int jim)
 {
     ofstream out("links");
     for(int i=0;i<jim;i++)
