@@ -14,8 +14,8 @@ interface ScannedIps {
 const App: React.FC = () => {
   const videos = [
     'http://192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1',
-    'http://192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1',
-    'http://192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1',
+    'http://admin:testingA!@192.168.6.108/cgi-bin/mjpg/video.cgi?subtype=1',
+    'http://admin:testingA!@192.168.6.110/cgi-bin/mjpg/video.cgi?subtype=1',
   ];
 
 
