@@ -9,17 +9,20 @@ type VideoGridProps = {
   videoCount: number;
 };
 
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const VideoGrid: React.FC<VideoGridProps> = ({ videoSources, videoCount }) => {
   return (
     <div style={styles.grid}>
       {videoSources.slice(0, videoCount).map((source, index) => (
-        <div>
-        <img key={index} style={styles.video}
-          src={source}/>
-          <button className="button1" type='submit' onClick={submit}>REBOOT</button>
+        <div  key={index}>
+        <img style={styles.video} src={source}/>
+          <button id='index' className="button1" type='submit' onClick={submitReboot}>REBOOT</button>
           <button className="button1">SAVE</button>
           <button className="button1">SNAPSHOT</button>
-          <button className="button1">CHUNGUS</button>
+          <button className="button1" type='submit' onClick={refresh}>CHUNGUS</button>
       </div>
       ))}
       
@@ -27,7 +30,7 @@ const VideoGrid: React.FC<VideoGridProps> = ({ videoSources, videoCount }) => {
 
   );
 };
-function submit() {
+function submitReboot() {
     var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
@@ -37,7 +40,9 @@ function submit() {
   xhr.open('get', 'http://admin:testingA!@192.168.6.110/cgi-bin/magicBox.cgi?action=reboot', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
   xhr.send();
-
+}
+function refresh() {
+  //var img =document.getElementById('str');
 }
 const styles = {
   grid: {
