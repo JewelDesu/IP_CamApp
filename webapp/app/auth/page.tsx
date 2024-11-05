@@ -1,23 +1,26 @@
+'use client'
 import React from 'react';
 import VideoGrid from '../compinents/videogrid';
-
-interface ScannedIps {
-  links: string;
-  brand: string;
-
-}
-
-
-
-  
+import { useEffect, useState } from 'react';
 
 const App: React.FC = () => {
+  const [dataResponse, setdataResponse] = useState([]);
   const videos = [
-    'http://192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1',
-    'http://admin:testingA!@192.168.6.108/cgi-bin/mjpg/video.cgi?subtype=1',
-    'http://admin:testingA!@192.168.6.110/cgi-bin/mjpg/video.cgi?subtype=1',
+    '192.168.0.113',
+    '192.168.0.113',
+    '192.168.0.113',
+    '192.168.0.113',
   ];
-
+  useEffect(() => {
+    async function getPageData() {
+      const data = './api/vendors'
+      const response = await fetch(data);
+      const res = (await response).json();
+      console.log(res);
+      setdataResponse(res.adress)
+    }
+    getPageData();
+  })
 
 
   return (
