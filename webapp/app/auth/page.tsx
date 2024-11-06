@@ -1,34 +1,52 @@
 'use client'
 import React from 'react';
 import VideoGrid from '../compinents/videogrid';
+import VideoSingle from '../compinents/videosingle';
 import { useEffect, useState } from 'react';
 
+interface Post {
+  ID: number;
+  ipaddr: string;
+  vendor: string;
+}
+
 const App: React.FC = () => {
-  const [dataResponse, setdataResponse] = useState([]);
-  const videos = [
-    '192.168.0.113',
-    '192.168.0.113',
-    '192.168.0.113',
-    '192.168.0.113',
-  ];
+
+  const [posts, setVideos] = useState<Post[]>([]);
+
   useEffect(() => {
-    async function getPageData() {
-      const data = './api/vendors'
-      const response = await fetch(data);
-      const res = (await response).json();
-      console.log(res);
-      setdataResponse(res.adress)
-    }
-    getPageData();
-  })
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/active_ips');
+        const data = await response.json();
+        if (data && Array.isArray(data.posts)) {
+          setVideos(data.posts as Post[]);
+          console.log("Data fetched and posts set:", data.posts);
+        } else {
+          console.warn("Expected data.posts to be an array but got:", data.posts);
+          setVideos([]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-
-  return (
-    <div>
-      <h1>Video Gallery</h1>
-      <VideoGrid videoSources={videos} videoCount={videos.length} />
-    </div>
-  );
+  const videoSources = posts.map(post => post.ipaddr);
+  if(posts.length == 1){
+    return(
+        <VideoSingle videoSource={videoSources}/>
+    );
+  } else { 
+    return (
+      <div>
+        <h1>Video Gallery</h1>
+        
+        <VideoGrid videoSources={videoSources} videoCount={posts.length} />
+      </div>
+    );
+  }
 };
 
 
