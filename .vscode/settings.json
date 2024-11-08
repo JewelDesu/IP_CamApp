@@ -5,6 +5,9 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "thread": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "iosfwd": "cpp"
     }
 }

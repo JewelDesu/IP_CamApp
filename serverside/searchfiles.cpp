@@ -1,22 +1,7 @@
 #include "search.hpp"
 
-char HOST[] = "localhost";
-char USER[] = "root";
-char PASS[] = "medis";
-char NAME[] = "camapp";
-
-MYSQL* connectiondb()
-{
-    MYSQL* conn;
-    conn = mysql_init(0);
-    conn = mysql_real_connect(conn, HOST, USER, PASS, NAME, 3306, NULL, 0);
-    if(conn){
-        return conn;
-    }
-    else{
-        return conn;
-    }
-}
+//extern vector<string> ipaddrs;
+//extern vector<string> macaddrs;
 
 void scan()
 {
@@ -36,7 +21,7 @@ int getLineCount ()
 
     fin.close();
     return n;
-}
+} 
 
 int getLineCountVendor ()
 {
@@ -52,7 +37,7 @@ int getLineCountVendor ()
     return n;
 }
 
-void openfile (struct host* p, int n)
+void openfile (struct host* p, int n) 
 {
     ifstream fin("scan");
     int t=1;
@@ -96,14 +81,14 @@ void returnOutput(struct list* l, int jim)
 
 void assignAddr (struct list* l, int var)
 {
-    //string rtsp="http://admin:admin@";
-    //string dahua="/cam/realmonitor?channel=1&subtype=1";
+    string rtsp="http://admin:admin@";
+    string dahua="/cam/realmonitor?channel=1&subtype=1";
     int jim = 0;
     for(int i=0;i<var;i++)
     {
         if(l[i].vendor == "Dahua")
             {
-                l[i].addr=l[i].ip;
+                l[i].addr=rtsp + l[i].ip + dahua;
                 jim++;
             }
 
@@ -116,30 +101,13 @@ void assignAddr (struct list* l, int var)
 
     returnOutput(l,jim);
 }
-void insertion(MYSQL* conn,struct list* l, int var)
-{
-    int qstate=0;
-    stringstream ss;
-    string query;
-    query="TRUNCATE TABLE active_ips";
-    const char* q=query.c_str();
-    qstate = mysql_query(conn,q);
 
-        for(int i=0;i<var;i++)
-    {
-        ss << "INSERT INTO active_ips (ipaddr,vendor) VALUES ('"+l[i].ip+"','"+l[i].vendor+"')";
-        query = ss.str();
-        q=query.c_str();
-        qstate = mysql_query(conn,q);
-    }
-
-}
-void compare (MYSQL* conn, struct host* p, struct vendors* v, int n, int m)
+void compare (struct host* p, struct vendors* v, int n, int m)
 {
     list* l = new list[10];
     int var=0;
-
-
+    
+    
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<m;j++)
@@ -153,15 +121,12 @@ void compare (MYSQL* conn, struct host* p, struct vendors* v, int n, int m)
 
         }
     }
-    //assignAddr(l,var);
-    insertion(conn,l,var);
+    assignAddr(l,var);
 }
 
 int main() {
-
-    MYSQL* conn=connectiondb();
     scan();
-    //sleep_for(7s);
+    sleep_for(7s);
 
     int n=getLineCount();
     int m=getLineCountVendor();
@@ -171,6 +136,6 @@ int main() {
 
     openfile(p,n);
     openfileVendor(v,m);
-    compare(conn,p,v,n,m);
+    compare(p,v,n,m);
 
 }

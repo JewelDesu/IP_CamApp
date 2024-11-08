@@ -8,10 +8,14 @@
 #include <iomanip>
 #include <chrono>
 #include <thread>
+#include <mysql.h>
+#include <sstream>
+
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::stringstream;
 using std::to_string;
 using std::ifstream;
 using std::ofstream;
