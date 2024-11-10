@@ -2,6 +2,7 @@
 import React from 'react';
 import VideoGrid from '../compinents/videogrid';
 import VideoSingle from '../compinents/videosingle';
+import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
 
 interface Post {
@@ -34,7 +35,13 @@ const App: React.FC = () => {
   }, []);
 
   const videoSources = posts.map(post => post.ipaddr);
-  if(posts.length == 1){
+  if(posts.length ==0)
+  {
+    return(
+      <Modal />
+    );
+  }
+  else if(posts.length == 1){
     return(
         <VideoSingle videoSource={videoSources}/>
     );

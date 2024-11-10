@@ -1,0 +1,16 @@
+http://admin:admin@192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-11-9%2021:10:01&endTime=2024-11-9%2021:14:01&subtype=0
+
+http://admin:admin@192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-8%2013:00:01&endTime=2012-10-8%2014:00:01&subtype=0
+http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
+
+
+
+
+
+http://192.168.1.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2012-10-8%2013:00:01&endTime=2012-10-8%2014:00:01&subtype=0
+
+http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-09%2021:10:01&endTime=2024-11-09%2021:14:01&subtype=0
+
+http://192.168.0.113/cgi-bin/RPC_Loadfile/mnt/sd/2024-11-09/001/dav/20/20.30.00-20.35.00[M][0@0][0].dav
+
+http://92.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
