@@ -4,7 +4,9 @@ http://admin:admin@192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1
 http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
 
 
+http://192.168.6.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
 
+http://admin:testingA!@192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-11-11%2021:50:01&endTime=2024-11-11%2022:00:01&subtype=0
 
 
 http://192.168.1.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2012-10-8%2013:00:01&endTime=2012-10-8%2014:00:01&subtype=0
@@ -13,4 +15,23 @@ http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2
 
 http://192.168.0.113/cgi-bin/RPC_Loadfile/mnt/sd/2024-11-09/001/dav/20/20.30.00-20.35.00[M][0@0][0].dav
 
+http://192.168.0.141/cgi-bin/RPC_Loadfile/mnt/sd/2024-11-11/001/dav/21/21.50.00-21.55.00[M][0@0][0].dav
+
 http://92.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
+
+
+gst-launch-1.0 -e filesrc location="loadfile.cgi" ! h264parse ! filesink location=test.mp4
+
+$ gst-launch-1.0 qtmux name=mx ! filesink location=test.mp4 filesrc location= test.ts ! tsdemux name=dmx dmx. ! queue ! h265parse ! mx. dmx. !  queue ! aacparse ! faad ! audioresample ! audioconvert ! voaacenc ! mx.
+
+
+gst-launch-1.0 filesrc location=loadfile.cgi ! h264parse ! filesink location=a.mp4
+gst-launch-1.0 -ev filesrc location=loadfile.cgi ! tsdemux ! mpegvideoparse ! avdec_mpeg2video ! video/x-raw, format=Y42B ! videoconvert ! nvvidconv ! nvv4l2h264enc ! h264parse ! qtmux ! filesink location=a.mp4
+
+ffmpeg -i loadfile.cgi -vcodec copy video.mp4 /// works
+
+gst-launch-1.0 -e filesrc location=loadfile.cgi ! video/x-h265 ! h265parse ! h265parse ! queue ! filesink location=a.mp4
+
+gst-launch-1.0 filesrc location=loadfile.cgi ! filesink location=a.mp4
+
+gst-launch-1.0 filesrc location="loadfile.cgi" ! h265parse ! video/x-h265, alignment=au ! filesink location="a.mp4" // ????

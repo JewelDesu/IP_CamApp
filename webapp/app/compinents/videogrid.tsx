@@ -9,7 +9,7 @@ type VideoGridProps = {
   videoCount: number;
 };
 
-const camip = "http://admin:admin@"
+const camip = "http://admin:testingA!@"
 const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
 
 const VideoGrid: React.FC<VideoGridProps> = ({ videoSources, videoCount }) => {

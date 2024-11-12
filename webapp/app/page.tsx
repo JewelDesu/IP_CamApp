@@ -1,12 +1,12 @@
 
 //import { VideoPage } from "./vid/vid_page";
-import App from "./auth/page"
+import Vid2 from "./vid/vid3"
 
 
 
 const VidPage = () => {
     return(
-        <App />
+        <Vid2 />
     )
 }
 export default VidPage;
