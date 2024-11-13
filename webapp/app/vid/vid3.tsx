@@ -1,22 +1,15 @@
 'use client'
 import './styles.css'
 import * as React from "react";
-import Hls from "hls.js";
-import videos from '../loadfile'
-
-
+import dogVideo from './dog.webm';
 export default function Vid2() {
-
-
-for(let i=0;i<2;i++){
-
 
 
 
   return (
-    <div className="App" >
-      <video className='vid1' src={} autoPlay /> 
-    </div>
+    <video width="1200" height="720" controls>
+      <source src="./dog.mp4" type="video/mp4" />
+      <source src={dogVideo} type="video/webm" />
+    </video>
   );
-}
 }
