@@ -14,6 +14,8 @@ interface Post {
 const App: React.FC = () => {
 
   const [posts, setVideos] = useState<Post[]>([]);
+  const openModal = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +40,8 @@ const App: React.FC = () => {
   if(posts.length ==0)
   {
     return(
-      <Modal />
+      <Modal open={openModal}/>
+
     );
   }
   else if(posts.length == 1){

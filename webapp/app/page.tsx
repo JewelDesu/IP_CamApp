@@ -1,12 +1,12 @@
 
 //import { VideoPage } from "./vid/vid_page";
-import Vid2 from "./vid/vid3"
+import DatePicker from "./compinents/datePicker/timePickerForm"
 
 
 
 const VidPage = () => {
     return(
-        <Vid2 />
+        <DatePicker />
     )
 }
 export default VidPage;

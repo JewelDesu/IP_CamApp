@@ -6,7 +6,7 @@ async function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const Modal = ({ }) => {
+const Modal = ({open}) => {
     if(!open) return null
     return(
         <div className="overlay">
