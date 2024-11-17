@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles.css';
 import Modal from "./modals/Modal";
 import VideoModal from "./modals/videoTimeStampModal";
+import DatePicker from './datePicker/timePickerForm';
 
 type VideoIp = {
     videoIp: string;
@@ -11,13 +12,14 @@ const camip = "http://admin:admin@"
 
 const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
   const [openModal, setOpenModal] = useState(false)
-  const [openVideoModal, setOpenVideoModal] = useState(false)
+ // const [openVideoModal, setOpenVideoModal] = useState(false)
+  const [openCalendar, setOpenCalendar] = useState(false)
 
   return(    
           <div>
           <button id='index' className="button1" type='submit' onClick={() => submitReboot(videoIp)}>REBOOT</button>
-          <button className="button1" onClick={() => setOpenVideoModal(true)}>Get Video</button>
-          <VideoModal open={openVideoModal} onClose={() => setOpenVideoModal(false)}/>
+          <button className="button1" onClick={() => setOpenCalendar(true)}>Get Video</button>
+          <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)}/>
           <button className="button1" onClick={() => setOpenModal(true)}>SNAPSHOT</button>
           <Modal open={openModal} imgsrc={camip.concat(videoIp,'/cgi-bin/snapshot.cgi')} onClose={() => setOpenModal(false)}/>
           <button className="button1" type='submit' onClick={submitReboot}>CHUNGUS</button>

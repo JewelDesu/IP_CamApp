@@ -20,10 +20,10 @@ const FormSchema = z.object({
   dateTime: z.date(),
 })
 type formSchemaType = z.infer<typeof FormSchema>
-const camip = "http://admin:admin@";
-const videoIp = "1.1.1.1";
+const camip = "http://admin:testingA!@";
+const videoIp = "192.168.0.141";
 
-export default function DatePicker() {
+const DatePicker = ({open,onClose}) => {
       // 1. Define your form.
     const form = useForm<formSchemaType>({
         resolver: zodResolver(FormSchema),
@@ -50,7 +50,7 @@ export default function DatePicker() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     xhr.send();
     }
-
+    if(!open) return null
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -94,3 +94,4 @@ export default function DatePicker() {
         </Form>
     )
 }
+export default DatePicker;
