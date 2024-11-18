@@ -3,6 +3,7 @@ import './styles.css';
 import Modal from "./modals/Modal";
 import VideoModal from "./modals/videoTimeStampModal";
 import DatePicker from './datePicker/timePickerForm';
+import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 
 type VideoIp = {
     videoIp: string;
@@ -16,14 +17,21 @@ const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
   const [openCalendar, setOpenCalendar] = useState(false)
 
   return(    
-          <div>
-          <button id='index' className="button1" type='submit' onClick={() => submitReboot(videoIp)}>REBOOT</button>
-          <button className="button1" onClick={() => setOpenCalendar(true)}>Get Video</button>
-          <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)}/>
-          <button className="button1" onClick={() => setOpenModal(true)}>SNAPSHOT</button>
-          <Modal open={openModal} imgsrc={camip.concat(videoIp,'/cgi-bin/snapshot.cgi')} onClose={() => setOpenModal(false)}/>
-          <button className="button1" type='submit' onClick={submitReboot}>CHUNGUS</button>
-          </div>
+        <div>
+            <button id='index' className="button1" type='submit' onClick={() => submitReboot(videoIp)}>REBOOT</button>
+            
+            <Popover>
+                <PopoverTrigger asChild>
+                <button className="button1" onClick={() => setOpenCalendar(true)}>Get Video</button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)}/>
+                </PopoverContent>
+            </Popover>
+            <button className="button1" onClick={() => setOpenModal(true)}>SNAPSHOT</button>
+            <Modal open={openModal} imgsrc={camip.concat(videoIp,'/cgi-bin/snapshot.cgi')} onClose={() => setOpenModal(false)}/>
+            <button className="button1" type='submit' onClick={submitReboot}>CHUNGUS</button>
+        </div>
       )
 }
 

@@ -30,25 +30,13 @@ const DatePicker = ({open,onClose}) => {
     })
  
     function onSubmit(values: formSchemaType) {
-        const startTime = values.dateTime;
-        const endTime = new Date(startTime);
-        endTime.setMinutes(endTime.getMinutes() + 5);
+        const startTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd HH:mm:ss"));
+        const endTime = encodeURIComponent(
+          format(new Date(values.dateTime.getTime() + 5 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
+        );
+      
+        fetch(`/api/proxy?startTime=${startTime}&endTime=${endTime}`)
 
-        const formattedStartTime = format(startTime, "yyyy-MM-dd HH:mm:ss");
-        const formattedEndTime = format(endTime, "yyyy-MM-dd HH:mm:ss");
-        const url = `${camip}${videoIp}/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${encodeURIComponent(formattedStartTime)}&endTime=${encodeURIComponent(formattedEndTime)}&subtype=0`;
-        console.log(values, null, 2)
-        console.log("Constructed URL:", url); // For debugging
-
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                alert(xhr.response);
-            }
-        }
-    xhr.open('get', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    xhr.send();
     }
     if(!open) return null
     return (
