@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "./timePicker";
+import { fetchWithDigestAuth } from "@/app/api/proxy/route"; // Adjust the path as needed
 
 const FormSchema = z.object({
   dateTime: z.date(),
@@ -29,15 +30,16 @@ const DatePicker = ({open,onClose}) => {
         resolver: zodResolver(FormSchema),
     })
  
-    function onSubmit(values: formSchemaType) {
+    async function onSubmit(values: formSchemaType) {
         const startTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd HH:mm:ss"));
         const endTime = encodeURIComponent(
           format(new Date(values.dateTime.getTime() + 5 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
         );
       
+        //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
+      
         fetch(`/api/proxy?startTime=${startTime}&endTime=${endTime}`)
-
-    }
+      }
     if(!open) return null
     return (
         <Form {...form}>

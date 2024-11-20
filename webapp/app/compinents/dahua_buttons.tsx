@@ -9,7 +9,7 @@ type VideoIp = {
     videoIp: string;
 };
 
-const camip = "http://admin:admin@"
+const camip = "http://admin:testingA!@"
 
 const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
   const [openModal, setOpenModal] = useState(false)

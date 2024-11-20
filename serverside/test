@@ -6,7 +6,7 @@ http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2
 
 http://192.168.6.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
 
-http://admin:testingA!@192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-11-11%2021:50:01&endTime=2024-11-11%2022:00:01&subtype=0
+http://admin:testingA!@192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-11-18%2019:50:01&endTime=2024-11-18%2020:00:01&subtype=0
 
 
 http://192.168.1.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2012-10-8%2013:00:01&endTime=2012-10-8%2014:00:01&subtype=0
@@ -48,3 +48,67 @@ ffmpeg -i loadfile.cgi -map 0 -c:v libx264 -crf 18 -c:a copy out2.mp4
 
 maybe
 gst-launch-1.0 filesrc location="loadfile.cgi" ! h264parse ! video/x-h264, alignment=au ! filesink location="a.mp4"
+
+curl --data --digest --user "admin:testingA!" http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad"&"channel=1"&"startTime=2024-11-19%2013%3A50%3A00"&"endTime=2024-11-19%2013%3A55%3A00"&"subtype=0
+
+http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-19%252013%253A50%253A00&endTime=2024-11-19%252013%253A55%253A00&subtype=0
+http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-20%2016%3A30%3A00&endTime=2024-11-20%2016%3A35%3A00&subtype=0
+
+
+---------------------------------------- Hercules (History Request)(start)-------------------------
+
+
+GET /ISAPI/ContentMgmt/search HTTP/1.1$0D$0AAuthorization: Basic YWRtaW46dGVzdGluZ0Eh$0D$0AContent-length:523$0D$0A$0D$0A<<?xml version="1.0" encoding="utf-8"?>$0D$0A<<CMSearchDescription>$0D$0A<<searchID>C77384AD-66A0-0001-E7C2-1151F04F90B0<</searchID>$0D$0A<<trackIDList>$0D$0A<<trackID>101<</trackID>$0D$0A<</trackIDList>$0D$0A<<timeSpanList>$0D$0A<<timeSpan>$0D$0A<<startTime>2017-03-13T16:00:00Z<</startTime>$0D$0A<<endTime>2017-03-16T15:59:59Z<</endTime>$0D$0A<</timeSpan>$0D$0A<</timeSpanList>$0D$0A<<maxResults>40<</maxResults>$0D$0A<<searchResultPostion>0<</searchResultPostion>$0D$0A<<metadataList>$0D$0A<<metadataDescriptor>//recordType.meta.std-cgi.com<</metadataDescriptor>$0D$0A<</metadataList>$0D$0A<</CMSearchDescription>$0D$0A$0D$0A
+
+Connection closed
+Connecting to 192.168.6.81 ...
+Connected to 192.168.6.81
+GET /ISAPI/ContentMgmt/search HTTP/1.1
+Authorization: Basic YWRtaW46dGVzdGluZ0Eh
+Content-length:523
+
+<?xml version="1.0" encoding="utf-8"?>
+<CMSearchDescription>
+<searchID>C77384AD-66A0-0001-E7C2-1151F04F90B0</searchID>
+<trackIDList>
+<trackID>101</trackID>
+</trackIDList>
+<timeSpanList>
+<timeSpan>
+<startTime>2017-03-13T16:00:00Z</startTime>
+<endTime>2017-03-16T15:59:59Z</endTime>
+</timeSpan>
+</timeSpanList>
+<maxResults>40</maxResults>
+<searchResultPostion>0</searchResultPostion>
+<metadataList>
+<metadataDescriptor>//recordType.meta.std-cgi.com</metadataDescriptor>
+</metadataList>
+</CMSearchDescription>
+
+HTTP/1.1 200 OK
+Date: Mon, 26 Sep 2022 12:07:08 GMT
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache
+Content-Length: 352
+Connection: close
+Content-Type: application/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<CMSearchResult version="2.0" xmlns="http://www.hikvision.com/ver20/XMLSchema">
+<searchID>{C77384AD-66A0-0001-E7C2-1151F04F90B0}</searchID>
+<responseStatus>true</responseStatus>
+<responseStatusStrg>NO MATCHES</responseStatusStrg>
+<numOfMatches>0</numOfMatches>
+<matchList>
+</matchList>
+</CMSearchResult>
+Connection closed
+
+
+
+---------------------------------------- Hercules (History Request)(end)-------------------------
+
+192.168.6.81
