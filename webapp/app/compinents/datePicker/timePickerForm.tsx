@@ -24,7 +24,7 @@ type formSchemaType = z.infer<typeof FormSchema>
 const camip = "http://admin:testingA!@";
 const videoIp = "192.168.0.141";
 
-const DatePicker = ({open,onClose}) => {
+const DatePicker = ({open,onClose, ipaddr}) => {
       // 1. Define your form.
     const form = useForm<formSchemaType>({
         resolver: zodResolver(FormSchema),
@@ -38,7 +38,8 @@ const DatePicker = ({open,onClose}) => {
       
         //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
       
-        fetch(`/api/proxy?startTime=${startTime}&endTime=${endTime}`)
+        fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}`)
+        
       }
     if(!open) return null
     return (

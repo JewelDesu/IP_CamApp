@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import fetch from "node-fetch";
 import crypto from "crypto";
+import path from "path";
+import fs from "fs/promises"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
+  const ipAddr = searchParams.get("videoIp");
 
   const username = "admin";
   const password = "testingA!";
   const uri = `/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
-  const url = `http://192.168.0.141${uri}`;
+  const url = `http://${ipAddr}${uri}`;
 
   try {
     const firstResponse = await fetch(url, {
@@ -39,35 +42,26 @@ export async function GET(req: Request) {
 
     const authHeader = `Digest username="${username}", realm="${authParams.realm}", nonce="${authParams.nonce}", uri="${uri}", algorithm="MD5", qop=${authParams.qop}, nc=${nc}, cnonce="${cnonce}", response="${response}"`;
 
-    fetch(url, {
+    const secondResponse = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: authHeader,
       },
-    })
-    .then(resp => resp.blob())
-    .then(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = "loadfile.cgi";
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
     });
- 
 
-     //const data = await secondResponse;
+    if (!secondResponse.ok) {
+      return NextResponse.json({ error: " failed" }, { status: secondResponse.status });
+    }
 
-    //  if (!secondResponse.ok) {
-    //    return NextResponse.json({ error: data }, { status: secondResponse.status });
-    //  }
+    const fileBuffer = await secondResponse.arrayBuffer();
 
-    //return NextResponse.json({ secondResponse });
+    const filePath = path.join(process.cwd(), "public", `video-${Date.now()}.cgi`);
+    await fs.writeFile(filePath, Buffer.from(fileBuffer));
+
+    return NextResponse.json({ message: "File downloaded successfully.", path: filePath });
   } catch (error) {
     console.error("Error in proxy:", error);
-    return NextResponse.json({ error: "Proxy request failed." }, { status: 500 });
+    return NextResponse.json({ error: "Proxy request failed.", details: error }, { status: 500 });
   }
 }
 

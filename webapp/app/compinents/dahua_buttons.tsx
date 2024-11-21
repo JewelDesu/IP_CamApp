@@ -25,7 +25,7 @@ const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
                 <button className="button1" onClick={() => setOpenCalendar(true)}>Get Video</button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                    <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)}/>
+                    <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)} ipaddr={videoIp}/>
                 </PopoverContent>
             </Popover>
             <button className="button1" onClick={() => setOpenModal(true)}>SNAPSHOT</button>
