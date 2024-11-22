@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
+import { exec } from 'child_process';
 import fetch from "node-fetch";
 import crypto from "crypto";
 import path from "path";
 import fs from "fs/promises"
+
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -57,6 +62,18 @@ export async function GET(req: Request) {
 
     const filePath = path.join(process.cwd(), "public", `video-${Date.now()}.cgi`);
     await fs.writeFile(filePath, Buffer.from(fileBuffer));
+
+    exec('ffmpeg -i ./public/video.cgi -map o -c:v libx264 -crf 18 -c:a copy out.mp4', (error, stdout, stderr) => {
+      if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+      }
+      if (stderr) {
+          console.log(`stderr: ${stderr}`);
+          return;
+      }
+      console.log(`stdout: ${stdout}`);})
+    await sleep(4000);
 
     return NextResponse.json({ message: "File downloaded successfully.", path: filePath });
   } catch (error) {
