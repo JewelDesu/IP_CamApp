@@ -4,7 +4,6 @@ import fetch from "node-fetch";
 import crypto from "crypto";
 import path from "path";
 import fs from "fs/promises"
-import { format } from "date-fns";
 
 async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -15,6 +14,7 @@ export async function GET(req: Request) {
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
   const ipAddr = searchParams.get("videoIp");
+  const fileTime = searchParams.get("fileTime");
 
   const username = "admin";
   const password = "testingA!";
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
     const filePath = path.join(process.cwd(), "public", `video.cgi`);
     await fs.writeFile(filePath, Buffer.from(fileBuffer));
 
-    exec(`ffmpeg -i ./public/video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy video-${startTime}.mp4`, (error, stdout, stderr) => {
+    exec(`ffmpeg -i ./public/video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy ./publicvideo-${fileTime}.mp4`, (error, stdout, stderr) => {
        if (error) {
            console.log(`error: ${error.message}`);
            return;

@@ -37,10 +37,11 @@ const DatePicker = ({open,onClose, ipaddr}) => {
         const endTime = encodeURIComponent(
           format(new Date(values.dateTime.getTime() + 5 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
         );
+        const fileTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd-HH-mm-ss"));
       
         //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
       
-        fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}`)
+        fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}&fileTime=${fileTime}`)
         return(
             
             <VideoModal open={openModal} onClose={() => setOpenModal(false)}/>
