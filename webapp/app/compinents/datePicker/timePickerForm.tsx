@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from 'react';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "./timePicker";
 import { fetchWithDigestAuth } from "@/app/api/proxy/route"; // Adjust the path as needed
+import VideoModal from "../modals/videoTimeStampModal"
 
 const FormSchema = z.object({
   dateTime: z.date(),
@@ -25,7 +26,8 @@ const camip = "http://admin:testingA!@";
 const videoIp = "192.168.0.141";
 
 const DatePicker = ({open,onClose, ipaddr}) => {
-      // 1. Define your form.
+    const [openModal, setOpenModal] = useState(false)
+
     const form = useForm<formSchemaType>({
         resolver: zodResolver(FormSchema),
     })
@@ -39,7 +41,10 @@ const DatePicker = ({open,onClose, ipaddr}) => {
         //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
       
         fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}`)
-        
+        return(
+            
+            <VideoModal open={openModal} onClose={() => setOpenModal(false)}/>
+        )
       }
     if(!open) return null
     return (
@@ -80,7 +85,8 @@ const DatePicker = ({open,onClose, ipaddr}) => {
                     </FormItem>
                     )}
                 />
-            <Button type="submit">Submit</Button>
+            <button type="submit" onClick={() => setOpenModal(true)}>Submit</button>
+            <VideoModal open={openModal} onClose={() => setOpenModal(false)}/>
             </form>
         </Form>
     )

@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const VideoModal = ({open,onClose}) => {
     if(!open) return null
     return(
@@ -8,6 +9,9 @@ const VideoModal = ({open,onClose}) => {
             <div onClick={(e) => {
                 e.stopPropagation()
             }} className="container">
+                <video width="1200" height="720" controls>
+                <source src="./out3.mp4" type="video/mp4" />
+                </video>
                 <p onClick={onClose} className="closebtn">X</p>
                 <div className="btncontainer">
                     <button> Save </button>

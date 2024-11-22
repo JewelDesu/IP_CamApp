@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Modal = ({open,onClose,imgsrc}) => {
     if(!open) return null
     return(

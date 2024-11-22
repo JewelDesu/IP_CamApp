@@ -115,3 +115,15 @@ Connection closed
 
 
 gst-launch-1.0 -e filesrc location=./video-1.cgi ! qtdemux name=demux ! h265parse ! nvv4l2decoder !  4 PCT Clear | TEA | FFXIV  bitrate=4000000 ! h264parse ! progressreport update-freq=1 ! qtmux name=mux ! filesink location=./h264_output.mp4
+
+
+
+
+
+            <Popover>
+                <PopoverTrigger asChild>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)} ipaddr={videoIp}/>
+                </PopoverContent>
+            </Popover>
