@@ -63,7 +63,7 @@ export async function GET(req: Request) {
     const filePath = path.join(process.cwd(), "public", `video.cgi`);
     await fs.writeFile(filePath, Buffer.from(fileBuffer));
 
-    exec(`ffmpeg -i ./public/video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy ./publicvideo-${fileTime}.mp4`, (error, stdout, stderr) => {
+    exec(`ffmpeg -i ./public/video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy ./public/video-${fileTime}.mp4`, (error, stdout, stderr) => {
        if (error) {
            console.log(`error: ${error.message}`);
            return;

@@ -10,9 +10,13 @@
 #include <thread>
 #include <mysql.h>
 #include <sstream>
+#include <sqlite3.h>
+#include <exception>
+
 
 
 using std::cout;
+using std::cerr;
 using std::endl;
 using std::string;
 using std::stringstream;
