@@ -1,5 +1,5 @@
 #include "search.hpp"
-
+#define BUFFER 100
 static int connectiondb(const char* s)
 {
     sqlite3* DB;
@@ -14,12 +14,12 @@ static int connectiondb(const char* s)
 static int createTable(const char* s)
 {
     sqlite3* DB;
-    string sql = "CREATE TABLE  IF NOT EXIST active_ips("
-        "ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+    string sql = "CREATE TABLE active_ips("
+        "ID INTEGER PRIMARY KEY, "
         "ipaddr TEXT NOT NULL, "
-        "vendor TEXT NOT NULL,);";
+        "vendor TEXT NOT NULL);";
 
-    try{
+    
         int exit = 0;
         exit = sqlite3_open(s,&DB);
 
@@ -27,38 +27,31 @@ static int createTable(const char* s)
         exit = sqlite3_exec(DB, sql.c_str(),NULL,0,&messaggeError);
 
         if (exit != SQLITE_OK) {
-            cerr << "Eror creating table" << endl;
+            cerr << "Error creating table" << endl;
             sqlite3_free(messaggeError);
-        }
+        } else 
+        	cout<<"good"<<endl;
         sqlite3_close(DB);
-    }
-    catch (const exception & e)
-    {
-        cerr << e.what();
-    }
+    
     return 0;
 }
 
-char* GetGatewayForInterface() 
+void scan()
 {
-    char* gateway = NULL;
+    string ipaddr;
+    FILE *pipe;
+    char buffer[BUFFER];
+    pipe= popen("ip route | grep default | awk '{print $3}'","r");
+    if(pipe == NULL){cout<<"bad";}
+    else{while (fgets(buffer, BUFFER, pipe) != NULL){
+    string ping (buffer,11);
+    ipaddr = ping;
+    }}
 
-    char cmd [1000] = {0x0};
-    sprintf(cmd,"ip route | grep default | awk '{print $3}'");
-    FILE* fp = popen(cmd, "r");
-    char line[256]={0x0};
+    pclose(pipe);
 
-    if(fgets(line, sizeof(line), fp) != NULL)
-        return line;
-
-
-    pclose(fp);
-}
-
-void scan(char* s)
-{
-    string ip (s);
-    string comm="nmap -n -sP "+ip+"/24 | awk '/Nmap scan report/{printf $5;printf "+";getline;getline;print $3;}' > scan";
+    string comm="sudo nmap -n -sP "+ipaddr+"/24 | awk '/Nmap scan report/{printf $5;printf \" \";getline;getline;print $3;}' > scan";
+    //cout<<comm<<endl;
     system(comm.c_str());
 }
 
@@ -160,7 +153,8 @@ void insertion(const char* s,struct list* l, int var)
     char* messaggeError;
 
     int exit = sqlite3_open(s,&DB);
-    string query="TRUNCATE TABLE active_ips";
+    string query="DELETE FROM active_ips";
+    sqlite3_exec(DB,query.c_str(),NULL,0, &messaggeError);
     string sql;
     const char* q=query.c_str();
 
@@ -201,10 +195,9 @@ int main() {
 
     sqlite3* DB;
     const char* dir = "../webapp/db/camapp.db";
-    char* defaultGateway = GetGatewayForInterface();
     connectiondb(dir);
     createTable(dir);
-    scan(defaultGateway);
+    scan();
     //sleep_for(7s);
 
     int n=getLineCount();

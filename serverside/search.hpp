@@ -19,6 +19,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
+using std::exception;
 using std::stringstream;
 using std::to_string;
 using std::ifstream;
