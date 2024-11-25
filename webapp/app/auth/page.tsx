@@ -4,6 +4,7 @@ import VideoGrid from '../compinents/videogrid';
 import VideoSingle from '../compinents/videosingle';
 import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
+//import VideoModal from "./modals/videoTimeStampModal";
 
 interface Post {
   ID: number;
@@ -18,22 +19,14 @@ const App: React.FC = () => {
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/active_ips');
-        const data = await response.json();
-        if (data && Array.isArray(data.posts)) {
-          setVideos(data.posts as Post[]);
-          console.log("Data fetched and posts set:", data.posts);
-        } else {
-          console.warn("Expected data.posts to be an array but got:", data.posts);
-          setVideos([]);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+    fetch("http://localhost:3000/api/sqlite", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setVideos(data));
   }, []);
 
   const videoSources = posts.map(post => post.ipaddr);
@@ -51,7 +44,7 @@ const App: React.FC = () => {
   } else { 
     return (
       <div>
-        <h1>Video Gallery</h1>
+        <button className="buttonVideos"> Videos </button>
         
         <VideoGrid videoSources={videoSources} videoCount={posts.length} />
       </div>

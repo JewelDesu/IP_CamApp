@@ -15,15 +15,12 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "./timePicker";
-import { fetchWithDigestAuth } from "@/app/api/proxy/route"; // Adjust the path as needed
 import VideoModal from "../modals/videoTimeStampModal"
 
 const FormSchema = z.object({
   dateTime: z.date(),
 })
 type formSchemaType = z.infer<typeof FormSchema>
-const camip = "http://admin:testingA!@";
-const videoIp = "192.168.0.141";
 
 const DatePicker = ({open,onClose, ipaddr}) => {
     const [openModal, setOpenModal] = useState(false)

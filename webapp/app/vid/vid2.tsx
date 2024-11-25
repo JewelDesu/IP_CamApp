@@ -26,25 +26,16 @@ export default function Vid2() {
   const [posts, setVideos] = useState<Post[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/active_ips');
-        const data = await response.json();
-
-        // TypeScript type guard to ensure data.posts exists and is an array
-        if (data && Array.isArray(data.posts)) {
-          setVideos(data.posts as Post[]); // Type assertion to Post[]
-          console.log("Data fetched and posts set:", data.posts);
-        } else {
-          console.warn("Expected data.posts to be an array but got:", data.posts);
-          setVideos([]); // Fallback to empty array if data.posts is missing
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+    fetch("http://localhost:3000/api/sqlite", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Set the request headers to indicate JSON format
+      },
+    })
+      .then((res) => res.json()) // Parse the response data as JSON
+      .then((data) => setVideos(data)); // Update the state with the fetched data
   }, []);
+
 
   return (
     <div className="App">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css';
 import Modal from "./modals/Modal";
-import VideoModal from "./modals/videoTimeStampModal";
 import DatePicker from './datePicker/timePickerForm';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 
