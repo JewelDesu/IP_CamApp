@@ -1,6 +1,6 @@
 import React from "react";
 import { exec } from 'child_process';
-import '../compinents/styles.css';
+import '../components/styles.css';
 
 async function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));

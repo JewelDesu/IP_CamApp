@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
-import VideoGrid from '../compinents/videogrid';
-import VideoSingle from '../compinents/videosingle';
+import VideoGrid from '../components/videogrid';
+import VideoSingle from '../components/videosingle';
 import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
 //import VideoModal from "./modals/videoTimeStampModal";

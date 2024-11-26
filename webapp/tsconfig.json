@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/config/db.js", "app/compinents/modals/videoTimeStampModal.jsx"],
+  "include": ["video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/config/db.js", "app/components/modals/videoTimeStampModal.jsx"],
   "exclude": ["node_modules"]
 }
