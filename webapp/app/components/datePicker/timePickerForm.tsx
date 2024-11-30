@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "./timePicker";
-import VideoModal from "../modals/videoTimeStampModal"
+
 
 const FormSchema = z.object({
   dateTime: z.date(),
@@ -35,15 +35,15 @@ const DatePicker = ({open,onClose, ipaddr}) => {
           format(new Date(values.dateTime.getTime() + 5 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
         );
         const fileTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd-HH-mm-ss"));
+        const reqTime = `video-${fileTime}`;
       
         //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
-      
+        fetch(`/api/sqlitepost?vidName=${reqTime}`, {
+            method: "PUT",
+          })
         fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}&fileTime=${fileTime}`)
-        return(
-            
-            <VideoModal open={openModal} onClose={() => setOpenModal(false)}/>
-        )
       }
+
     if(!open) return null
     return (
         <Form {...form}>
@@ -83,8 +83,7 @@ const DatePicker = ({open,onClose, ipaddr}) => {
                     </FormItem>
                     )}
                 />
-            <button type="submit" onClick={() => setOpenModal(true)}>Submit</button>
-            <VideoModal open={openModal} onClose={() => setOpenModal(false)}/>
+            <button type="submit">Submit</button>
             </form>
         </Form>
     )

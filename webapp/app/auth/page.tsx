@@ -4,7 +4,7 @@ import VideoGrid from '../components/videogrid';
 import VideoSingle from '../components/videosingle';
 import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
-//import VideoModal from "./modals/videoTimeStampModal";
+import VideoModal from '../components/modals/videoTimeStampModal';
 
 interface Post {
   ID: number;
@@ -16,6 +16,7 @@ const App: React.FC = () => {
 
   const [posts, setVideos] = useState<Post[]>([]);
   const openModal = useState(false);
+  const [openVideoModal, setOpenVideoModal] = useState(false)
 
 
   useEffect(() => {
@@ -44,8 +45,8 @@ const App: React.FC = () => {
   } else { 
     return (
       <div>
-        <button className="buttonVideos"> Videos </button>
-        
+        <button className="buttonVideos" onClick={() => setOpenVideoModal(true)}> Videos </button>
+          <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
         <VideoGrid videoSources={videoSources} videoCount={posts.length} />
       </div>
     );
