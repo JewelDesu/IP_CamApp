@@ -16,20 +16,20 @@ const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
   const [openCalendar, setOpenCalendar] = useState(false)
 
   return(    
-        <div>
-            <button id='index' className="button1" type='submit' onClick={() => submitReboot(videoIp)}>REBOOT</button>
+        <div className="button1">
+            <button id='index' type='submit' onClick={() => submitReboot(videoIp)}>REBOOT</button>
             
             <Popover>
                 <PopoverTrigger asChild>
-                <button className="button1" onClick={() => setOpenCalendar(true)}>Get Video</button>
+                <button onClick={() => setOpenCalendar(true)}>Get Video</button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
                     <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)} ipaddr={videoIp}/>
                 </PopoverContent>
             </Popover>
-            <button className="button1" onClick={() => setOpenModal(true)}>SNAPSHOT</button>
+            <button onClick={() => setOpenModal(true)}>SNAPSHOT</button>
             <Modal open={openModal} imgsrc={camip.concat(videoIp,'/cgi-bin/snapshot.cgi')} onClose={() => setOpenModal(false)}/>
-            <button className="button1" type='submit' onClick={submitReboot}>CHUNGUS</button>
+            <button type='submit' onClick={submitReboot}>CHUNGUS</button>
         </div>
       )
 }

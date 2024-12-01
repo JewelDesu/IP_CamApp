@@ -194,7 +194,7 @@ void compare (const char* s, struct host* p, struct vendors* v, int n, int m)
 int main() {
 
     sqlite3* DB;
-    const char* dir = "../webapp/db/camapp.db";
+    const char* dir = "../webapp/camapp.db";
     connectiondb(dir);
     createTable(dir);
     scan();

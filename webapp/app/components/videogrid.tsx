@@ -34,9 +34,10 @@ const styles = {
     gridTemplateColumns: 'repeat(2, 1fr)',
   },
   video: {
-    width: '75%',
+    width: '95%',
     borderRadius: '8px',
-    display: 'flex'
+    display: 'flex',
+    margin: 'auto',
   },
 
 };

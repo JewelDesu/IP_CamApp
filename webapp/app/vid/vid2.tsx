@@ -26,7 +26,7 @@ export default function Vid2() {
   const [posts, setVideos] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/sqlite", {
+    fetch("./api/sqlite", {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Set the request headers to indicate JSON format

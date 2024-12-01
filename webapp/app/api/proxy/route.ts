@@ -62,7 +62,7 @@ export async function GET(req: Request) {
     const fileBuffer = await secondResponse.arrayBuffer();
     const filePath = path.join(process.cwd(), "public", `video.cgi`);
     await fs.writeFile(filePath, Buffer.from(fileBuffer));
-
+    const reqTime = `video-${fileTime}`;
     exec(`ffmpeg -i ./public/video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy ./public/${reqTime}.mp4`, (error, stdout, stderr) => {
        if (error) {
            console.log(`error: ${error.message}`);
@@ -73,7 +73,6 @@ export async function GET(req: Request) {
            return;
        }
        console.log(`stdout: ${stdout}`);})
-     await sleep(4000);
 
     return NextResponse.json({ message: "File downloaded successfully.", path: filePath });
   } catch (error) {

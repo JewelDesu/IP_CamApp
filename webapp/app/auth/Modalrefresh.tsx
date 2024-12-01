@@ -1,5 +1,5 @@
 import React from "react";
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import '../components/styles.css';
 
 async function sleep(ms: number): Promise<void> {
@@ -14,7 +14,7 @@ const Modal = ({open}) => {
             <div className="mid">
                 <div className="btncontainer2">
                     <button onClick={async () => {
-                        exec('/serverside/search').unref()
+                        execFile('/serverside/search').unref()
                         await sleep(2000);
                         window.location.reload();
                     }}> 

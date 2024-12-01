@@ -9,9 +9,10 @@ interface Post {
 
 const VideoModal = ({openVideo,onVideoClose}) => {
   const [posts, setVideos] = useState<Post[]>([]);
-
+  
   useEffect(() => {
-    fetch("http://localhost:3000/api/sqlitevid", {
+    if (openVideo) {
+    fetch("./api/sqlitevid", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -19,12 +20,13 @@ const VideoModal = ({openVideo,onVideoClose}) => {
       })
       .then((res) => res.json())
       .then((data) => setVideos(data));
-  }, []);
+    }
+  }, [openVideo]);
 
   const videoName = posts.map(post => post.videoName);
 
   if(!openVideo) return null
-  if(posts.length ==0){
+  if(posts.length == 0){
       return(
         <div className="overlay" onClick={onVideoClose}>
           <meta http-equiv="Cache-Control" content="no-cache"></meta>
@@ -39,15 +41,15 @@ const VideoModal = ({openVideo,onVideoClose}) => {
       );
   } else { 
     return (
-      <div className="overlay" onClick={onVideoClose}>
+      <div className="videoOverlay" onClick={onVideoClose}>
         <meta http-equiv="Cache-Control" content="no-cache"></meta>
         <div onClick={(e) => {
             e.stopPropagation()
-        }} className="container">
+        }} className="videoContainer">
           <div style={styles.grid} >
           {videoName.slice(0, posts.length).map((source, index) => (
             <div  key={index}>
-              <video width="1200" height="720" controls>
+              <video style={styles.video} controls>
                 <source src={`./${source}.mp4`} type="video/mp4" />
               </video>
             </div>
@@ -62,12 +64,12 @@ const VideoModal = ({openVideo,onVideoClose}) => {
 const styles = {
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    gridTemplateColumns: 'repeat(3, 2fr)',
   },
   video: {
-    width: '75%',
-    borderRadius: '8px',
-    display: 'flex'
+    width: '95%',
+    height: '95%',
+    margin: 'auto',
   },
 
 };
