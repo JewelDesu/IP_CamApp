@@ -1,5 +1,4 @@
 import React from "react";
-import { execFile } from 'child_process';
 import '../components/styles.css';
 
 async function sleep(ms: number): Promise<void> {
@@ -13,11 +12,7 @@ const Modal = ({open}) => {
             <meta http-equiv="Cache-Control" content="no-cache"></meta>
             <div className="mid">
                 <div className="btncontainer2">
-                    <button onClick={async () => {
-                        execFile('/serverside/search').unref()
-                        await sleep(2000);
-                        window.location.reload();
-                    }}> 
+                    <button onClick={search}> 
                         REFRESH CAMERA LIST 
                     </button>
                 </div>
@@ -26,4 +21,9 @@ const Modal = ({open}) => {
     )
 }
 
+async function search() {
+    fetch('/api/search')
+    await sleep(5000);
+    window.location.reload();
+}
 export default Modal

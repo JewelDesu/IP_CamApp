@@ -38,6 +38,7 @@ gst-launch-1.0 filesrc location=loadfile.cgi ! filesink location=a.mp4
 
 gst-launch-1.0 filesrc location="loadfile.cgi" ! h265parse ! video/x-h265, alignment=au ! filesink location="a.mp4" // ????
 
+ffmpeg -i video.cgi -map 0 -c:v libx264 -crf 18 -c:a copy asdf.mp4
 WORKING 
 
 fast but squares
@@ -127,3 +128,20 @@ gst-launch-1.0 -e filesrc location=./video-1.cgi ! qtdemux name=demux ! h265pars
                     <DatePicker open={openCalendar} onClose={ () => setOpenCalendar(false)} ipaddr={videoIp}/>
                 </PopoverContent>
             </Popover>
+
+
+#!/bin/sh
+                                                                                                               
+DEFAULT_DEMO_APPLICATION_GTK=/usr/local/demo/launch-demo-gtk.sh
+if [ -e /etc/default/demo-launcher ]; then
+source /etc/default/demo-launcher
+if [ ! -z "$DEFAULT_DEMO_APPLICATION" ]; 
+then $DEFAULT_DEMO_APPLICATION
+else
+$DEFAULT_DEMO_APPLICATION_GTK
+fi
+else
+$DEFAULT_DEMO_APPLICATION_GTK
+fi 
+
+/usr/local/demo/demo_launcher.py 
