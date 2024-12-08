@@ -1,10 +1,18 @@
-
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { execFile } from 'child_process';
 
-async function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== 'GET') {
+        res.status(405).json({ error: 'Method Not Allowed' });
+        return;
+    }
 
-export async function GET() {
-    execFile('/serverside/search').unref()
-  }
+    execFile('/serverside/search', (error, stdout) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            res.status(500).json({ error: 'Error executing file' });
+            return;
+        }
+        res.status(200).json({ message: stdout || 'Process completed' });
+    });
+}
