@@ -11,7 +11,7 @@ export async function GET(req, res) {
     });
   }
 
-  const items = await db.all("SELECT * FROM active_ips");
+  const items = await db.all("SELECT * FROM cameras");
 
   return new Response(JSON.stringify(items), {
     headers: { "Content-Type": "application/json" },

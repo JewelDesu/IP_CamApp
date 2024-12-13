@@ -6,18 +6,19 @@ import './styles.css';
 
 type VideoGridProps = {
   videoSources: string[];
+  videoPassw: string[];
   videoCount: number;
 };
 
-const camip = "http://admin:testingA!@"
-const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
 
-const VideoGrid: React.FC<VideoGridProps> = ({ videoSources, videoCount }) => {
+const VideoGrid: React.FC<VideoGridProps> = ({ videoSources, videoPassw, videoCount }) => {
+  const camip = "http://admin:"
+  const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
   return (
     <div style={styles.grid} >
       {videoSources.slice(0, videoCount).map((source, index) => (
         <div  key={index}>
-        <img style={styles.video} src={camip.concat(source,camip2)}/>
+        <img style={styles.video} src={camip.concat(videoPassw[index],"@",source,camip2)}/>
         
         <DahButtons videoIp={source} />
       </div>

@@ -6,7 +6,13 @@ import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
 import VideoModal from '../components/modals/videoTimeStampModal';
 
-interface Post {
+interface Post1 {
+  ID: number;
+  ipaddr: string;
+  password: string;
+  vendor: string;
+}
+interface Post2{
   ID: number;
   ipaddr: string;
   vendor: string;
@@ -14,13 +20,14 @@ interface Post {
 
 const App: React.FC = () => {
 
-  const [posts, setVideos] = useState<Post[]>([]);
+  const [posts, setVideos] = useState<Post1[]>([]);
+  const [camPosts, setCam] = useState<Post2[]>([]);
   const openModal = useState(false);
   const [openVideoModal, setOpenVideoModal] = useState(false)
 
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/sqlite", {
+    fetch("./api/sqliteCameras", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,11 +37,25 @@ const App: React.FC = () => {
       .then((data) => setVideos(data));
   }, []);
 
+  useEffect(() => {
+    fetch("./api/sqlite", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      })
+      .then((res) => res.json())
+      .then((data) => setCam(data));
+  }, []);
+
   const videoSources = posts.map(post => post.ipaddr);
+  const videoPassw = posts.map(post => post.password);
+  const videoVendor = camPosts.map(posts => posts.vendor);
+  const videoSource = camPosts.map(posts => posts.ipaddr)
   if(posts.length ==0)
   {
     return(
-      <Modal open={openModal}/>
+      <Modal open={openModal} camIp={videoSource} count={camPosts.length} vend={videoVendor}/>
 
     );
   }
@@ -47,7 +68,7 @@ const App: React.FC = () => {
       <div>
         <button className="buttonVideos" onClick={() => setOpenVideoModal(true)}> Videos </button>
           <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
-        <VideoGrid videoSources={videoSources} videoCount={posts.length} />
+        <VideoGrid videoSources={videoSources} videoPassw={videoPassw} videoCount={posts.length} />
       </div>
     );
   }
