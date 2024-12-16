@@ -5,7 +5,7 @@ import VideoSingle from '../components/videosingle';
 import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
 import VideoModal from '../components/modals/videoTimeStampModal';
-
+import AddCameraModal from '../components/modals/addCamera';
 interface Post1 {
   ID: number;
   ipaddr: string;
@@ -22,22 +22,34 @@ const App: React.FC = () => {
 
   const [posts, setVideos] = useState<Post1[]>([]);
   const [camPosts, setCam] = useState<Post2[]>([]);
-  const openModal = useState(false);
   const [openVideoModal, setOpenVideoModal] = useState(false)
+  const [openAddModal, setOpenAddModal] = useState(false)
 
 
   useEffect(() => {
+    const cachedData = localStorage.getItem("fetchedData1");
+    if (cachedData) {
+      setVideos(JSON.parse(cachedData));
+    } else {
     fetch("./api/sqliteCameras", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    })
+      })
       .then((res) => res.json())
-      .then((data) => setVideos(data));
+      .then((data) => {
+        setVideos(data);
+        localStorage.setItem("fetchedData1", JSON.stringify(data));
+      })
+    }
   }, []);
 
   useEffect(() => {
+    const cachedData = localStorage.getItem("fetchedData2");
+    if (cachedData) {
+      setCam(JSON.parse(cachedData));
+    } else {
     fetch("./api/sqlite", {
       method: "GET",
       headers: {
@@ -45,8 +57,12 @@ const App: React.FC = () => {
       },
       })
       .then((res) => res.json())
-      .then((data) => setCam(data));
-  }, []);
+      .then((data) => {
+        setCam(data);
+        localStorage.setItem("fetchedData2", JSON.stringify(data));
+      })
+    }
+}, []);
 
   const videoSources = posts.map(post => post.ipaddr);
   const videoPassw = posts.map(post => post.password);
@@ -55,7 +71,7 @@ const App: React.FC = () => {
   if(posts.length ==0)
   {
     return(
-      <Modal open={openModal} camIp={videoSource} count={camPosts.length} vend={videoVendor}/>
+      <Modal camIp={videoSource} count={camPosts.length} vend={videoVendor}/>
 
     );
   }
@@ -69,6 +85,8 @@ const App: React.FC = () => {
         <button className="buttonVideos" onClick={() => setOpenVideoModal(true)}> Videos </button>
           <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
         <VideoGrid videoSources={videoSources} videoPassw={videoPassw} videoCount={posts.length} />
+        <button className="buttonVideos" onClick={() => setOpenAddModal(true)} > Videhmhjmos </button>
+        <AddCameraModal open={openAddModal} onClose={() => setOpenAddModal(false)}/>
       </div>
     );
   }

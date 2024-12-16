@@ -1,7 +1,6 @@
-import React from "react";
+'use client';
+import { useState } from "react";
 import '../components/styles.css';
-import DahButtons from "../components/dahua_buttons";
-import { useFormState } from "react-dom";
 
 async function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -13,16 +12,17 @@ type CamGridProps = {
     vend: string[];
   };
 
-const Modal: React.FC<CamGridProps> =({open, camIp, count, vend}) => {
+const Modal: React.FC<CamGridProps> =({camIp, count, vend}) => {
+    const [submitted, setSubmitted] = useState({});
     //const [state, FormAction] = useFormState(FormSubmit, '');
+    const reloadPage = () => {
+        window.location.reload()
+      };
 
-    async function FormSubmit(event) {
-        event.preventDefault(); // Prevent page reload
-    
-        // Create a FormData object from the form
+    async function FormSubmit(event, index) {
+        event.preventDefault();
         const formData = new FormData(event.target);
     
-        // Send the form data via a fetch request
         const response = await fetch(`/api/sqlitepostCameras`, {
             method: "PUT",
             body: formData,
@@ -31,17 +31,17 @@ const Modal: React.FC<CamGridProps> =({open, camIp, count, vend}) => {
         if (response.ok) {
             const result = await response.json();
             console.log("Success:", result);
+            setSubmitted((prev) => ({ ...prev, [index]: true }));
         } else {
             console.error("Error:", await response.text());
         }
     }
 
-    if(!open) return null
     if(count == 0)
     {
         return(
             <div className="overlay">
-                <meta http-equiv="Cache-Control" content="no-cache"></meta>
+                <meta httpEquiv="Cache-Control" content="no-cache"></meta>
                 <div className="mid">
                     <div className="btncontainer2">
                         <button > 
@@ -55,25 +55,28 @@ const Modal: React.FC<CamGridProps> =({open, camIp, count, vend}) => {
         return(
             <div className="grid2" >
                 <h1> Detected Cameras</h1>
-                {camIp.slice(0, count).map((source, index) => (
-                <div  key={index}>
-                    <form onSubmit={FormSubmit}>
+                {camIp.slice(0, count).map((source, index) => ( !submitted[index] &&(
+                <div  key={index}> 
+                    <form onSubmit={(e) => FormSubmit(e, index)}>
                     <div >
                         <label htmlFor="ppass">Enter camera {source} password </label>
-                        <input type="text" name="password" id="password" required />
+                        <input className="input1" type="text" name="password" id="password" required />
                         <input type="hidden" id="ipAddr" name="ipAddr" value={source} />
                         <input type="hidden" id="ipVend" name="ipVend" value={vend[index]} />
                     </div>
                     <div >
-                    <input type="submit" value="Subscribe!" />
+                    <input className="inputButton" type="submit" value="Submit" />
                     </div>
                     </form>
                     </div>
-                    ))} 
-        
+                ) 
+                ))} 
+            <button onClick={reloadPage}> Reload </button>
             </div>
+            
         )
     }
+    
 }
 
 export default Modal

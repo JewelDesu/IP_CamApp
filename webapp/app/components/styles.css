@@ -42,8 +42,8 @@
     height: 100%;
 }
 .container{
-    max-width: 1280px;
-    width: 100%;
+    max-width: 85%;
+    max-height: 90%;
     position: fixed;
     top: 40%;
     left: 50%;
@@ -52,12 +52,30 @@
     background-color: #ffffff;
     box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
 }
-.videoContainer{
-    max-width: 1280px;
-    max-height: 720px;
-    width: 100%;
-    position: fixed;
+.containerAdd{
+    max-width: 85%;
+    max-height: 90%;
+    width: 20%;
+    position:fixed;
     top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3f3f3f;
+    box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+}
+.containerAdd h1{
+    text-align: center;
+}
+.containerAdd label{
+    margin-left: 10px;
+}
+.videoContainer{
+    max-width: 85%;
+    max-height: 90%;
+    width: 80%;
+
+    position: fixed;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -124,9 +142,23 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
 }
-.grid2 button{
+.input1{
+    color:#000;
+    border: 2px solid #ffff;
+    border-radius: 2px;
+}
+.input2{
+    margin-left: 10px;
+    margin-top: 10px;
+    display: grid;
+    color:#000000;
+    border: 2px solid #ffff;
+    border-radius: 2px;
+}
+.inputButton{
+    color: #ffffff;
     border-radius: 10px;
-    margin: 20px;
+    margin: 5px;
     border: 2px solid #ffff;
     border-radius: 2px;
     padding: 3px 15px;
