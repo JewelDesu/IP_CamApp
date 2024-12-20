@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
+import { useToast } from "@/hooks/use-toast"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -23,8 +24,7 @@ const FormSchema = z.object({
 type formSchemaType = z.infer<typeof FormSchema>
 
 const DatePicker = ({open,onClose, ipaddr}) => {
-    const [openModal, setOpenModal] = useState(false)
-
+    const { toast } = useToast()
     const form = useForm<formSchemaType>({
         resolver: zodResolver(FormSchema),
     })
@@ -38,9 +38,17 @@ const DatePicker = ({open,onClose, ipaddr}) => {
         const reqTime = `video-${fileTime}`;
       
         //const apiURL = `http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=${startTime}&endTime=${endTime}&subtype=0`;
-        fetch(`/api/sqlitepost?vidName=${reqTime}`, {
+        const response = await fetch(`/api/sqlitepost?vidName=${reqTime}`, {
             method: "PUT",
-          })
+          });
+        if (response.ok) {
+            toast({
+                title: "Timestamp has been found",
+                description: "Video will be uploaded shortly",
+              })
+        } else {
+            console.error("Error:", await response.text());
+        }
         fetch(`/api/proxy?videoIp=${ipaddr}&startTime=${startTime}&endTime=${endTime}&fileTime=${fileTime}`)
       }
 

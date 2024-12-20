@@ -6,7 +6,7 @@ http://192.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2
 
 http://192.168.6.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
 
-http://admin:testingA!@192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-11-18%2019:50:01&endTime=2024-11-18%2020:00:01&subtype=0
+http://admin:testingA!@192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=0&startTime=2024-12-17%2010:20:01&endTime=2024-12-17%2010:30:01&subtype=0
 
 
 http://192.168.1.108/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2012-10-8%2013:00:01&endTime=2012-10-8%2014:00:01&subtype=0

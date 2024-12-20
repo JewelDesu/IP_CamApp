@@ -3,6 +3,8 @@ import './styles.css'
 import * as React from "react";
 import {useState, useEffect } from 'react';
 import Hls from "hls.js";
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const camip:string = "http://admin:admin@"
 const camip2:string = "/cgi-bin/mjpg/video.cgi?subtype=1"
@@ -17,6 +19,7 @@ interface Post {
 }
 
 export default function Vid2() {
+  const { toast } = useToast()
   const [hls] = useState(() => new Hls());
   const [hls2] = useState(() => new Hls());
   
@@ -39,6 +42,15 @@ export default function Vid2() {
 
   return (
     <div className="App">
+      <button
+      onClick={() => {
+        toast({
+          description: "Your message has been sent.",
+        })
+      }}
+    >
+      Show Toast
+    </button>
       <img src="source_url_here" alt="Dynamic Source" />
       <img src="http://admin:admin@192.168.0.113/cgi-bin/mjpg/video.cgi?subtype=1" alt="Camera Feed" />
 
