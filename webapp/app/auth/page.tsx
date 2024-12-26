@@ -85,7 +85,7 @@ const App: React.FC = () => {
         <button className="buttonVideos" onClick={() => setOpenVideoModal(true)}> Videos </button>
           <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
         <VideoGrid videoSources={videoSources} videoPassw={videoPassw} videoCount={posts.length} />
-        <button className="buttonVideos" onClick={() => setOpenAddModal(true)} > Videhmhjmos </button>
+        <button className="buttonVideos" onClick={() => setOpenAddModal(true)} > Add camera </button>
         <AddCameraModal open={openAddModal} onClose={() => setOpenAddModal(false)}/>
       </div>
     );

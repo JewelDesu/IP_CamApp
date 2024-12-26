@@ -29,7 +29,6 @@ const DahButtons: React.FC<VideoIp> = ({ videoIp}) => {
             </Popover>
             <button onClick={() => setOpenModal(true)}>SNAPSHOT</button>
             <Modal open={openModal} imgsrc={camip.concat(videoIp,'/cgi-bin/snapshot.cgi')} onClose={() => setOpenModal(false)}/>
-            <button type='submit' onClick={submitReboot}>CHUNGUS</button>
         </div>
       )
 }

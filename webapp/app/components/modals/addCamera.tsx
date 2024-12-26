@@ -4,6 +4,7 @@ import React from "react";
 const AddCameraModal = ({open,onClose}) => {
 
     async function FormSubmit(event) {
+        localStorage.clear();
         event.preventDefault();
         const formData = new FormData(event.target);
 
