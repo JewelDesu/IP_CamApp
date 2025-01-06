@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import { exec } from 'child_process';
-import fetch from "node-fetch";
 import crypto from "crypto";
 import path from "path";
 import fs from "fs/promises"
-
-async function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

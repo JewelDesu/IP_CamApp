@@ -23,7 +23,7 @@ const FormSchema = z.object({
 })
 type formSchemaType = z.infer<typeof FormSchema>
 
-const DatePicker = ({open,onClose, ipaddr}) => {
+const DatePicker = ({open, ipaddr}) => {
     const { toast } = useToast()
     const form = useForm<formSchemaType>({
         resolver: zodResolver(FormSchema),
@@ -32,7 +32,7 @@ const DatePicker = ({open,onClose, ipaddr}) => {
     async function onSubmit(values: formSchemaType) {
         const startTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd HH:mm:ss"));
         const endTime = encodeURIComponent(
-          format(new Date(values.dateTime.getTime() + 5 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
+          format(new Date(values.dateTime.getTime() + 2 * 60 * 1000), "yyyy-MM-dd HH:mm:ss")
         );
         const fileTime = encodeURIComponent(format(values.dateTime, "yyyy-MM-dd-HH-mm-ss"));
         const reqTime = `video-${fileTime}`;

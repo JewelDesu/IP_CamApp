@@ -54,7 +54,7 @@ curl --data --digest --user "admin:testingA!" http://192.168.0.141/cgi-bin/loadf
 
 http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-19%252013%253A50%253A00&endTime=2024-11-19%252013%253A55%253A00&subtype=0
 http://192.168.0.141/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-20%2016%3A30%3A00&endTime=2024-11-20%2016%3A35%3A00&subtype=0
-
+http://admin,testingA!@192.168.0.141/cgi-bin/mjpg/video.cgi?subtype=1
 
 ---------------------------------------- Hercules (History Request)(start)-------------------------
 
@@ -145,3 +145,6 @@ $DEFAULT_DEMO_APPLICATION_GTK
 fi 
 
 /usr/local/demo/demo_launcher.py 
+
+
+npm install next@latest react@latest react-dom@latest typescript @types/react @types/node

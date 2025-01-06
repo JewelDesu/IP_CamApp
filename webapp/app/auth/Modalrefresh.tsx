@@ -2,10 +2,6 @@
 import { useState } from "react";
 import '../components/styles.css';
 
-async function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 type CamGridProps = {
     camIp: string[];
     count: number;

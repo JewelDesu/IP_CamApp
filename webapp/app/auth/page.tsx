@@ -77,7 +77,7 @@ const App: React.FC = () => {
   }
   else if(posts.length == 1){
     return(
-        <VideoSingle videoSource={videoSources}/>
+        <VideoSingle videoSources={videoSources} videoPassw={videoPassw}/>
     );
   } else { 
     return (

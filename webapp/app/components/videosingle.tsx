@@ -3,17 +3,18 @@ import DahButtons from "./dahua_buttons"
 import './styles.css';
 
 type VideoProp = {
-  videoSource: string[];
+  videoSources: string[];
+  videoPassw: string[];
 };
 
 const camip = "http://admin:admin@"
 const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
 
-const VideoSingle: React.FC<VideoProp> = ({ videoSource }) => {
+const VideoSingle: React.FC<VideoProp> = ({ videoSources, videoPassw }) => {
     return (
         <div className="mid">
-          <img className="singlevideo" src={camip.concat(videoSource,camip2)}/> 
-          <DahButtons videoIp={videoSource} />
+           <img src={camip.concat(videoPassw[0],"@",videoSources[0],camip2)}/> 
+          <DahButtons videoIp={videoSources[0]} />
         </div>
       );
 }
