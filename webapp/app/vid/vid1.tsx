@@ -12,7 +12,7 @@ export default function Vid1() {
       hls.attachMedia(videoEl.current);
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
         hls.loadSource(
-          "http://192.168.0.166:4000/live/mystream.m3u8"
+          "http://localhost:4004/mystream.m3u8"
         );
       });
     }
@@ -20,7 +20,7 @@ export default function Vid1() {
 
   return (
     <div className="App">
-      <video ref={videoEl} controls />
+      <video ref={videoEl} controls autoPlay/>
     </div>
   );
 }
