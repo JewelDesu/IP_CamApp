@@ -7,14 +7,19 @@ type VideoProp = {
   videoPassw: string[];
 };
 
-const camip = "http://admin:admin@"
-const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
+const camip = "http://admin:"
+  const camip2 = "/cgi-bin/mjpg/video.cgi?subtype=1"
 
-const VideoSingle: React.FC<VideoProp> = ({ videoSources, videoPassw }) => {
+const VideoSingle = ({openVideo, videoSources, videoPassw }) => {
+  if(!openVideo) return null
     return (
         <div className="mid">
-           <img src={camip.concat(videoPassw[0],"@",videoSources[0],camip2)}/> 
-          <DahButtons videoIp={videoSources[0]} />
+           <img className="singlevideo" src={camip.concat(videoPassw,"@",videoSources,camip2) }/> 
+           {videoSources}
+           <button style={{ position: 'absolute', top: 10, right: 10, fontSize: 20 }} >
+        Close
+      </button>
+          <DahButtons videoIp={videoSources} />
         </div>
       );
 }

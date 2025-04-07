@@ -1,3 +1,11 @@
+.main{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
 .button1{
     text-align: center;
 }
@@ -10,6 +18,11 @@
 }
 .buttonVideos{
     float: right;
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+}
+.buttonVideos button{
     border-radius: 10px;
     margin: 20px;
     border: 2px solid #ffff;
@@ -28,7 +41,11 @@
     width: 100%;
     height: 100%;
 }
-
+.videogrid{
+    width: 17%;
+    border-radius: 8px;
+    margin: 10;
+}
 .videoOverlay{
     background-color: rgba(0,0,0,0.5);
     position:fixed;
@@ -123,7 +140,7 @@
 }
 .singlevideo{
     width: 1280px;
-
+    align-items: center;
 }
 .mid{
     
@@ -134,13 +151,31 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-.grid2{
-    text-align: center;
+.midbox{
+    background-color: #696969;
     position: absolute;
-    bottom: 50%;
-    left: 45%;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+.grid{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
+    padding-top: 100px;
+    padding-left: 10px;
+}
+.grid2{
+    max-width: 85%;
+    max-height: 90%;
+    width: 40%;
+    position:fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3f3f3f;
+    box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
 }
 .input1{
     color:#000;
@@ -162,4 +197,23 @@
     border: 2px solid #ffff;
     border-radius: 2px;
     padding: 3px 15px;
+}
+p{
+    color: #000;
+}
+.eventContainer{
+    max-width: 85%;
+    width: 50%;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3f3f3f;
+    box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+    align-items: right;
+}
+.eventbox{
+    margin: 10px;
+    border: 2px solid #ffff;
+    border-radius: 2px;
 }

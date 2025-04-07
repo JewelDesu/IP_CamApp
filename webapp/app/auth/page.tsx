@@ -6,6 +6,7 @@ import Modal from './Modalrefresh';
 import { useEffect, useState } from 'react';
 import VideoModal from '../components/modals/videoTimeStampModal';
 import AddCameraModal from '../components/modals/addCamera';
+import SettingsModal from '../components/modals/settingsModal';
 interface Post1 {
   ID: number;
   ipaddr: string;
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   const [camPosts, setCam] = useState<Post2[]>([]);
   const [openVideoModal, setOpenVideoModal] = useState(false)
   const [openAddModal, setOpenAddModal] = useState(false)
+  const [openSettingsModal, setSettingsModal] = useState(false)
 
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const App: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         setVideos(data);
-        localStorage.setItem("fetchedData1", JSON.stringify(data));
+       
       })
     }
   }, []);
@@ -59,7 +61,7 @@ const App: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         setCam(data);
-        localStorage.setItem("fetchedData2", JSON.stringify(data));
+        //localStorage.setItem("fetchedData2", JSON.stringify(data));
       })
     }
 }, []);
@@ -77,16 +79,30 @@ const App: React.FC = () => {
   }
   else if(posts.length == 1){
     return(
-        <VideoSingle videoSources={videoSources} videoPassw={videoPassw}/>
+      <div className='main'>
+        <div className="buttonVideos">
+        <button onClick={() => setOpenVideoModal(true)}> Videos </button>
+        <button onClick={() => setSettingsModal(true)}> Settings </button>
+        <button onClick={() => setOpenAddModal(true)} > Add camera </button>
+        </div>
+        <VideoSingle openVideo={true} videoSources={videoSources[0]} videoPassw={videoPassw[0]}/>
+        <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
+        <SettingsModal open={openSettingsModal} camIp={videoSources} count={posts.length} onClose={() => setSettingsModal(false)} />
+        <AddCameraModal open={openAddModal} onClose={() => setOpenAddModal(false)}/>
+        </div>
     );
   } else { 
     return (
-      <div>
-        <button className="buttonVideos" onClick={() => setOpenVideoModal(true)}> Videos </button>
-          <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
+      <div className='main'>
+                <div className="buttonVideos">
+        <button onClick={() => setOpenVideoModal(true)}> Videos </button>
+        <button onClick={() => setSettingsModal(true)}> Settings </button>
+        <button onClick={() => setOpenAddModal(true)} > Add camera </button>
+        </div>
         <VideoGrid videoSources={videoSources} videoPassw={videoPassw} videoCount={posts.length} />
-        <button className="buttonVideos" onClick={() => setOpenAddModal(true)} > Add camera </button>
-        <AddCameraModal open={openAddModal} onClose={() => setOpenAddModal(false)}/>
+          <VideoModal openVideo={openVideoModal} onVideoClose={() => setOpenVideoModal(false)}/>
+          <SettingsModal open={openSettingsModal} camIp={videoSources} count={posts.length} onClose={() => setSettingsModal(false)} />
+          <AddCameraModal open={openAddModal} onClose={() => setOpenAddModal(false)}/>
       </div>
     );
   }

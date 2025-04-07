@@ -175,8 +175,47 @@ Gstreamer instalation:
 apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 
 
+For stm
+apt install -y gstreamer1.0 gstreamer1.0-libav gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+
+
+
 webcam streaming gstreamer pipeline 
 
-gst-launch-1.0 v4l2src device="/dev/video0" ! videoconvert ! clockoverlay ! \x264enc ! video/x-h264, profile=main ! queue ! hlssink2 playlist-length=10 target-duration=10 playlist-location=./mystream.m3u8
+gst-launch-1.0 v4l2src device="/dev/video0" ! videoconvert ! clockoverlay ! x264enc ! video/x-h264, profile=main ! queue ! hlssink2 playlist-length=20 target-duration=5 playlist-location=./mystream.m3u8
 
-ffmpeg -i "/dev/video0" -c:v libx264 -crf 21 -b:v 100M -b:a 128k -hls_time 10 -hls_list_size 10 -start_number 1 mystream.m3u8
+gst-launch-1.0 v4l2src device="/dev/video0" ! videoconvert ! clockoverlay ! x264enc ! video/x-h264, profile=main ! queue ! hlssink2 max-files=20 target-duration=5 playlist-location=./mystream.m3u8
+
+no clock
+ffmpeg -i "/dev/video0" -y -c:v libx264 -vf format=yuv420p -hls_time 10 -hls_list_size 10 -start_number 1 mystream.m3u8
+
+clock
+ffmpeg -i "/dev/video4" -y  -c:v libx264 -vf "format=yuv420p, drawtext=fontfile=monofonto.ttf: fontsize=14: box=1: boxcolor=black@0.75: boxborderw=5: fontcolor=white: x=8: y=8: text='%{localtime\:%Y_%m_%d_%H_%M_%S}'" -hls_time 10 -hls_list_size 10 -start_number 1 mystream.m3u
+
+
+-vf drawtext=expansion=strftime:fontfile='/usr/share/fonts/cantarell/Cantarell-Light.otf':fontsize=14:fontcolor=white:shadowcolor=black:shadowx=2:shadowy=1:text='%Y-%m-%d\ %H\\\\:%M\\\\:%S':x=8:y=8
+
+-vf drawtext=fontfile=monofonto.ttf: fontsize=14: box=1: boxcolor=black@0.75: boxborderw=5: fontcolor=white: x=(w-text_w)/2: y=((h-text_h)/2)+((h-text_h)/4): text='%{gmtime\:%H\\\\\:%M\\\\\:%S}'
+
+
+
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&codes=[All]
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&channel=1&codes=%5BVideoMotion%5D
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&codes=[VideoMotion]
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&codes=[VideoMotion]&heartbeat=5
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&codes=[VideoMotion]&keepalive=20&heartbeat=5
+
+
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=getEventIndexes
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=getEventIndexes&code=VideoMotion
+>
+
+http://192.168.0.140/cgi-bin/snapManager.cgi?action=attachFileProc&Flags[0]=Events&Events=[VideoMotion]&heartbeat=5
+http://192.168.0.140/cgi-bin/eventManager.cgi?action=attach&channel=1&codes=%5BVideoMotion%5D
+
+Code=VideoMotion;action=Stop;index=0;data={
+   "EventID" : 584,
+   "Id" : [ 0 ],
+   "RealUTC" : 1741861872,
+   "RegionName" : [ "Region1" ]
+}

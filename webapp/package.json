@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "testhistory": "node history-test.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -43,7 +44,8 @@
     "eslint-config-next": "^15.1.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^3.1.1"
   },
   "browser": {
     "child_process": false

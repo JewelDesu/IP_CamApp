@@ -66,8 +66,11 @@ const Modal: React.FC<CamGridProps> =({camIp, count, vend}) => {
                     </form>
                     </div>
                 ) 
-                ))} 
-            <button onClick={reloadPage}> Reload </button>
+                ))}
+                        <button className="inputButton"> 
+                            REFRESH CAMERA LIST 
+                        </button> 
+            <button onClick={reloadPage} className="inputButton"> Reload Page</button>
             </div>
             
         )

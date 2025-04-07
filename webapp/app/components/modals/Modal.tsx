@@ -12,6 +12,7 @@ const Modal = ({open,onClose,imgsrc}) => {
                 <img src={imgsrc + new Date().getTime()} />
                 <p onClick={onClose} className="closebtn">X</p>
                 <div className="btncontainer">
+                    <button onClick={onClose}> Save </button>
                     <button onClick={onClose}> Close </button>
                 </div>
             </div>

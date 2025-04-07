@@ -41,6 +41,9 @@ const AddCameraModal = ({open,onClose}) => {
                     </div>
                     <div >
                     <input className="inputButton" type="submit" value="Submit" />
+                    <button className="inputButton"> 
+                            Scan network 
+                    </button>
                     </div>
                 </form>
                 <p onClick={onClose} className="closebtn">X</p>
