@@ -19,7 +19,7 @@ http://192.168.0.141/cgi-bin/RPC_Loadfile/mnt/sd/2024-11-11/001/dav/21/21.50.00-
 
 http://92.168.0.113/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2024-11-9%2021:00:01&endTime=2024-11-9%2022:00:01&subtype=0
 
-http://192.168.0.140/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2025-01-06%2020%3A00%3A00&endTime=2025-01-06%2020%3A02%3A00&subtype=0
+http://192.168.0.140/cgi-bin/loadfile.cgi?action=startLoad&channel=1&startTime=2025-04-28%2012%3A30%3A00&endTime=2025-04-28%2012%3A32%3A00&subtype=0
 
 
 gst-launch-1.0 -e filesrc location="loadfile.cgi" ! h264parse ! filesink location=test.mp4

@@ -6,11 +6,12 @@ const AddCameraModal = ({open, camIp, count, onClose}) => {
     const [submitted, setSubmitted] = useState({});
 
     async function FormSubmit(event, index) {
+        localStorage.clear();
         event.preventDefault();
         const formData = new FormData(event.target);
     
         const response = await fetch(`/api/sqliteDelete`, {
-            method: "POST",
+            method: "PUT",
             body: formData,
         });
     
